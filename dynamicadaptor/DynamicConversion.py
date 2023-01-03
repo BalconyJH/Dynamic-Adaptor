@@ -52,6 +52,14 @@ async def grpc_formate(message: dict) -> Union[RenderMessage, None]:
 
 
 async def get_grpc_header(module_author: dict) -> dict:
+    """获取grpc动态的图片头所需要的信息
+
+    Args:
+        module_author (dict): grpc动态中的module_author
+
+    Returns:
+        dict: 摘要信息
+    """
     author = module_author["author"]
     try:
         author["pub_time"] = module_author["ptimeLabelText"]
@@ -78,6 +86,14 @@ async def get_grpc_header(module_author: dict) -> dict:
 
 
 async def get_grpc_forward_header(message: dict) -> dict:
+    """获取grpc动态中关于转发动态的作者的信息
+
+    Args:
+        message (dict): 含有所有转发动态的module的动态
+
+    Returns:
+        dict: 符合要求的信息
+    """
     for i in message["modules"]:
         if i["moduleType"] == "module_author_forward":
             author = i["moduleAuthorForward"]
@@ -132,6 +148,14 @@ async def get_grpc_text(message: dict) -> Union[dict, None]:
 
 
 async def get_grpc_major(message: dict) -> Union[dict, None]:
+    """获取grpc动态的major部分
+
+    Args:
+        message (dict): 含有所有module的动态
+
+    Returns:
+        Union[dict, None]: 符合要求的信息
+    """
     for i in message["modules"]:
         try:
             if i["moduleDynamic"]["type"] == "mdl_dyn_forward":
@@ -207,6 +231,14 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
 
 
 async def get_grpc_additional(message: dict) -> Union[dict, None]:
+    """获取grpc动态的additional部分信息
+
+    Args:
+        message (dict): 含有所有module的动态信息
+
+    Returns:
+        Union[dict, None]: 符合要求的信息
+    """
     for i in message["modules"]:
         if i["moduleType"] == "module_additional":
             try:
@@ -255,6 +287,14 @@ async def get_grpc_additional(message: dict) -> Union[dict, None]:
 
 
 async def get_grpc_forward(message: dict) -> Union[Forward, None]:
+    """获取grpc动态中转发部分的信息
+
+    Args:
+        message (dict): 含有所有module的动态信息
+
+    Returns:
+        Union[Forward, None]: 符合要求的信息
+    """
     dynamic_forward = None
     for i in message["modules"]:
         try:
