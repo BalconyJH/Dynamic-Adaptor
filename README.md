@@ -12,7 +12,7 @@ web端的json数据同理
 
 ### 下载安装
 ``` xml
-pip install BiliDynamicAdaptor
+pip install dynamicadaptor
 ```
 
 ### 使用方法
