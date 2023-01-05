@@ -1,11 +1,20 @@
 name : Release
 
-on: push
-    branches:    
-      - master
+on : push
+  branches :
+    - master
 
-jobs:
-    set_env:
-        name: set env
-        runs-on: ubuntu-latest
+jobs :
+  build :
+  name : set env
+  runs-on : ubuntu-latest
+
+  steps :
+    - uses : actions/checkout@v2
+    - name : set up python3.8
+      uses : actions/setup-python@v1
+      with : 
+        python-version : 3.8
+
+    
         
