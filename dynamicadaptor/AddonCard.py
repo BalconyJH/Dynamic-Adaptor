@@ -9,6 +9,8 @@ class GoodsItem(BaseModel):
     price: str
     name: str
 
+    
+
 
 class Goods(BaseModel):
     head_text: str
