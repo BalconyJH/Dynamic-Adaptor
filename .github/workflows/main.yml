@@ -40,8 +40,7 @@ jobs:
         path: dist/*
     - name : Realease
       uses : ncipollo/release-action@v1
-      artifacts: "*.*"
-      token: ${{secrets.GITHUB_TOKEN}}
+
 
 
 
