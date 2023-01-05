@@ -2,8 +2,6 @@ name : Release
 
 on:
   push:
-    branches:    
-      - master
     tags:        
       - "v*"
 
@@ -37,17 +35,21 @@ jobs:
       with:
         tag_name: ${{steps.get_version.outputs.VERSION }}
         release_name: ${{steps.get_version.outputs.VERSION }}
+        name: build_result
         path: dist/*
 
     - name: Download a Build Artifact
       uses: actions/download-artifact@v3.0.1
+      with:
+        name: build_result
+
 
 
       
     - name : Realease whl
       uses : ncipollo/release-action@v1
       with :
-        artifacts: "*.whl,*.zip,*.tar.gz"
+        artifacts: "*/*.whl,*/*.zip,*/*.tar.gz"
       
 
 
