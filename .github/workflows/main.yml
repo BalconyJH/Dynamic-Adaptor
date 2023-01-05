@@ -38,7 +38,11 @@ jobs:
         tag_name: ${{steps.get_version.outputs.VERSION }}
         release_name: ${{steps.get_version.outputs.VERSION }}
         path: dist/*
-    - name : Realease 
+    - name : Realease
+      uses : ncipollo/release-action@v1
+      artifacts: "*.*"
+      token: ${{secrets.GITHUB_TOKEN}}
+
 
 
 
