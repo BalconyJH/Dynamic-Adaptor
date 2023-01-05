@@ -5,15 +5,14 @@ on:
     branches:
       - master
 
-jobs :
-  build :
-  name : set env
-  runs-on : ubuntu-latest
-
-  steps :
+jobs:
+  build:
+    name: set env
+    runs-on: ubuntu-latest
+    steps:
     - name : CheckOut
       uses : actions/checkout@v2
-    - name : set up python3.8
+    - name : set_up_python3.8
       uses : actions/setup-python@v4
       with : 
         python-version : 3.8
@@ -22,14 +21,19 @@ jobs :
     - name: install poetry
       run: pipx install poetry
       shell: bash
-    
+
     - name : InstallDependance
       run: poetry install -E all
       shell: bash
-    
+
     - name : BuildDist
       run : poetry build
       shell: bash 
-    
+
     - name: Create Release
       uses: actions/upload-artifact@v3.1.1
+
+
+
+
+  
