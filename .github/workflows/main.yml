@@ -32,18 +32,22 @@ jobs:
       run : poetry build
       shell: bash 
 
-    - name: Create Release
+    - name: upload artifact
       uses: actions/upload-artifact@v3.1.1
       with:
         tag_name: ${{steps.get_version.outputs.VERSION }}
         release_name: ${{steps.get_version.outputs.VERSION }}
         path: dist/*
-    - name : Realease
+
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v3.0.1
+      with:
+        name: build-result
+
+      
+    - name : Realease whl
       uses : ncipollo/release-action@v1
-      artifacts: "*.*"
-      token: ${{secrets.GITHUB_TOKEN}}
-
-
+      
 
 
 
