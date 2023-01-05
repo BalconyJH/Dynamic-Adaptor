@@ -41,14 +41,13 @@ jobs:
 
     - name: Download a Build Artifact
       uses: actions/download-artifact@v3.0.1
-      with:
-        path: dist/*
+
 
       
     - name : Realease whl
       uses : ncipollo/release-action@v1
-      with:
-        path: dist/*
+      with :
+        path: /*
       
 
 
