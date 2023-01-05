@@ -17,10 +17,17 @@ jobs:
       with : 
         python-version : 3.8
         architecture: "x64"
-        cache: "poetry"
     - name: install poetry
       run: pipx install poetry
       shell: bash
+    
+    - name : export requirement
+      run: poetry export --output requirements.txt
+      shell : bash
+      
+    - name : install dependance
+      run: pip install -r requirements.txt
+      shell : bash
 
     - name : InstallDependance
       run: poetry install -E all
