@@ -11,7 +11,6 @@ class GoodsItem(BaseModel):
 
     
 
-
 class Goods(BaseModel):
     head_text: str
     items: List[GoodsItem]
