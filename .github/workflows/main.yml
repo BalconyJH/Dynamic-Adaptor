@@ -32,7 +32,4 @@ jobs :
       shell: bash 
     
     - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{steps.version.outputs.version}}
-          files: build/*
+      uses: actions/upload-artifact@v3.1.1
