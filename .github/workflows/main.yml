@@ -48,13 +48,9 @@ jobs:
     - name : Realease whl
       uses : ncipollo/release-action@v1
       with:
-<<<<<<< HEAD
-        path: dist/*
-=======
         path: dist/*
       
 
 
 
   
->>>>>>> 610986a972fd67872816c794107cf05eb19909aa
