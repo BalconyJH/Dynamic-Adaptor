@@ -29,9 +29,6 @@ jobs:
     - name : BuildDist
       run : poetry build
       shell: bash 
-
-    
-
     # - name: upload artifact
     #   uses: actions/upload-artifact@v3.1.1
     #   with:
@@ -56,7 +53,7 @@ jobs:
     - name : Realease whl
       uses : ncipollo/release-action@v1
       with :
-        artifacts: "./dist/*.whl,.dist/*.tar.gz"
+        artifacts: "./dist/*.whl,./dist/*.tar.gz"
       
 
 
