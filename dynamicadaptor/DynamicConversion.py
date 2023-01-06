@@ -2,7 +2,7 @@ from typing import Union
 
 from .Message import RenderMessage
 from .Repost import Forward
-
+from loguru import logger
 
 async def formate_message(message_type: str, message: dict) -> Union[None, RenderMessage]:
     """将grpc动态或web端动态转换成渲染数据类型
@@ -22,6 +22,7 @@ async def formate_message(message_type: str, message: dict) -> Union[None, Rende
         else:
             return None
     except Exception as e:
+        logger.warning("error")
         return None
 
 
@@ -65,6 +66,8 @@ async def get_grpc_header(module_author: dict) -> dict:
         author["pub_time"] = module_author["ptimeLabelText"]
     except KeyError:
         author["pub_time"] = None
+    except Exception as e:
+        logger.exception("error")
     try:
         if author["official"]:
             author["official_verify"] = author["official"]
@@ -72,16 +75,21 @@ async def get_grpc_header(module_author: dict) -> dict:
             author["official_verify"] = {"type": -1}
     except KeyError:
         author["official_verify"] = {"type": -1}
+    except Exception as e:
+        logger.exception("error")
     try:
         author["vip"]["type"] = author["vip"]["Type"]
     except KeyError:
         author["vip"] = {"status": 0, "type": 0}
-
+    except Exception as e:
+        logger.exception("error")
     try:
         author["vip"]["avatar_subscript"] = author["vip"]["avatarSubscript"]
     except KeyError as e:
         author["vip"]["status"] = 0
         author["vip"]["avatar_subscript"] = 0
+    except Exception as e:
+        logger.exception("error")
     return author
 
 
@@ -341,17 +349,44 @@ async def web_formate(message: dict) -> RenderMessage:
             forward_major = message["orig"]["modules"]["module_dynamic"]["major"]
         except KeyError:
             forward_major = None
+        except TypeError:
+            forward_major = None
+        except Exception as e:
+            forward_major = None
+            logger.exception("error")
         forward_additional = message["orig"]["modules"]["module_dynamic"]["additional"]
         forward_text = message["orig"]["modules"]["module_dynamic"]["desc"]
         forward = Forward(header=forward_header, message_type=forward_type, major=forward_major,
                           additional=forward_additional, text=forward_text)
     except KeyError:
         forward = None
+
+    except TypeError:
+        forward = None
+        logger.exception("error")
+
     try:
         text = message["modules"]["module_dynamic"]["desc"]
-        text["topic"] = message["modules"]["module_dynamic"]["topic"]
+        if text:
+            text["topic"] = message["modules"]["module_dynamic"]["topic"]
+        else:
+            text = None
     except KeyError:
         text = None
+
+    except TypeError:
+        text = None
+
+    except Exception as e:
+        text=None
+        logger.exception("error")
+
+    print(message["type"])
+    print(header)
+    print(text)
+    print(major)
+    print(additional)
+    print(forward)
     render_message = RenderMessage(
         message_type=message["type"],
         header=header,
@@ -360,4 +395,5 @@ async def web_formate(message: dict) -> RenderMessage:
         additional=additional,
         forward=forward,
     )
+
     return render_message

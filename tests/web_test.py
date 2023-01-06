@@ -1,6 +1,6 @@
 from dynamicadaptor.DynamicConversion import formate_message
 import httpx
-
+import asyncio
 
 async def run():
     url = "https://api.bilibili.com/x/polymer/web-dynamic/v1/detail?timezone_offset=-480&id=746530608345251842"
