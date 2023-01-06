@@ -49,7 +49,7 @@ jobs:
     - name : Realease whl
       uses : ncipollo/release-action@v1
       with :
-        artifacts: "*/*.whl,*/*.zip,*/*.tar.gz"
+        artifacts: "build_result/*.whl,build_result/*.zip,build_result/*.tar.gz"
       
 
 
