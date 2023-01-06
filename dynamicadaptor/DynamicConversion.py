@@ -381,12 +381,7 @@ async def web_formate(message: dict) -> RenderMessage:
         text=None
         logger.exception("error")
 
-    print(message["type"])
-    print(header)
-    print(text)
-    print(major)
-    print(additional)
-    print(forward)
+
     render_message = RenderMessage(
         message_type=message["type"],
         header=header,
