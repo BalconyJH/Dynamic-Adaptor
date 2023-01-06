@@ -11,22 +11,22 @@ jobs:
     name: set env
     runs-on: ubuntu-latest
     steps:
-    - name : CheckOut
+    - name : Checkout
       uses : actions/checkout@v2
     - name : set_up_python3.8
       uses : actions/setup-python@v4
       with : 
         python-version : 3.8
         architecture: "x64"
-    - name: install poetry
+    - name: Install poetry
       run: pipx install poetry
       shell: bash
 
-    - name : InstallDependance
+    - name : Install dependance
       run: poetry install
       shell: bash
 
-    - name : BuildDist
+    - name : Build dist
       run : poetry build
       shell: bash 
     # - name: upload artifact
@@ -42,11 +42,11 @@ jobs:
     #   with:
     #     name: build_result
 
-    - name : check pwd
+    - name : Check pwd
       run: pwd
       shell: bash
     
-    - name : show file
+    - name : Show files
       run: ls -l
       shell: bash
       
@@ -55,6 +55,11 @@ jobs:
       with :
         artifacts: "./dist/*.whl,./dist/*.tar.gz"
       
+    - name : Publish to pypi
+      if: startsWith(github.ref, 'refs/tags')
+      uses: pypa/gh-action-pypi-publish@master
+      with:
+        password: ${{ secrets.PYPI_API_TOKEN }}
 
 
 
