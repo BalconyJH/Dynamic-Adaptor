@@ -32,18 +32,18 @@ jobs:
 
     
 
-    - name: upload artifact
-      uses: actions/upload-artifact@v3.1.1
-      with:
-        tag_name: ${{steps.get_version.outputs.VERSION }}
-        release_name: ${{steps.get_version.outputs.VERSION }}
-        name: build_result
-        path: dist/*
+    # - name: upload artifact
+    #   uses: actions/upload-artifact@v3.1.1
+    #   with:
+    #     tag_name: ${{steps.get_version.outputs.VERSION }}
+    #     release_name: ${{steps.get_version.outputs.VERSION }}
+    #     name: build_result
+    #     path: dist/*
 
-    - name: Download a Build Artifact
-      uses: actions/download-artifact@v3.0.1
-      with:
-        name: build_result
+    # - name: Download a Build Artifact
+    #   uses: actions/download-artifact@v3.0.1
+    #   with:
+    #     name: build_result
 
     - name : check pwd
       run: pwd
