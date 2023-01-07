@@ -22,7 +22,7 @@ async def formate_message(message_type: str, message: dict) -> Union[None, Rende
         else:
             return None
     except Exception as e:
-        logger.warning("error")
+        logger.exception(e)
         return None
 
 
@@ -36,13 +36,16 @@ async def grpc_formate(message: dict) -> Union[RenderMessage, None]:
 
     """
     message_type = message["cardType"]
+    message_id = message["extend"]["dynIdStr"]
     header = await get_grpc_header(message["modules"][0]["moduleAuthor"])
+    
     text = await get_grpc_text(message)
     major = await get_grpc_major(message)
     additional = await get_grpc_additional(message)
     forward = await get_grpc_forward(message)
     render_message = RenderMessage(
         message_type=message_type,
+        message_id=message_id,
         header=header,
         text=text,
         major=major,
@@ -105,7 +108,7 @@ async def get_grpc_forward_header(message: dict) -> dict:
     for i in message["modules"]:
         if i["moduleType"] == "module_author_forward":
             author = i["moduleAuthorForward"]
-            return {"name": author["title"][0]["text"]}
+            return {"name": author["title"][0]["text"],"mid": author["uid"]}
 
 
 async def get_grpc_text(message: dict) -> Union[dict, None]:
@@ -340,6 +343,7 @@ async def web_formate(message: dict) -> RenderMessage:
 
     """
     header = message["modules"]["module_author"]
+    message_id = message["id_str"]
     major = message["modules"]["module_dynamic"]["major"]
     additional = message["modules"]["module_dynamic"]["additional"]
     try:
@@ -384,6 +388,7 @@ async def web_formate(message: dict) -> RenderMessage:
 
     render_message = RenderMessage(
         message_type=message["type"],
+        message_id=message_id,
         header=header,
         text=text,
         major=major,

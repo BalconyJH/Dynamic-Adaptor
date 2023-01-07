@@ -9,6 +9,7 @@ from .Repost import Forward
 
 class RenderMessage(BaseModel):
     message_type: str
+    message_id:str
     header: Head
     text: Optional[Text]
     major: Optional[Major]

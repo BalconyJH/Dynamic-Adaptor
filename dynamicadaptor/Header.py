@@ -20,6 +20,7 @@ class Vip(BaseModel):
 
 class Head(BaseModel):
     name: str
+    mid: int
     face: Optional[str]
     pub_time: Optional[str]
     pub_ts: Optional[int]

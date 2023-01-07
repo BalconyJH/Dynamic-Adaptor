@@ -9,7 +9,6 @@ async def run():
     }
     res = httpx.get(url, headers=headers).json()
     result = await formate_message("web", res["data"]["item"])
-    print(result)
 
 
 if __name__ == "__main__":
