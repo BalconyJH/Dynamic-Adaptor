@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "DynamicAdaptor"
-version = "0.1.7"
+version = "0.1.8"
 description = ""
 authors = ["DMC <lzxder@outlook.com>"]
 readme = "README.md"
@@ -10,6 +10,9 @@ python = "^3.8.0"
 pydantic = "^1.10.4"
 loguru = "^0.6.0"
 
+
+[tool.poetry.group.dev.dependencies]
+bilirpc = "^0.1.3"
 
 [build-system]
 requires = ["poetry-core"]

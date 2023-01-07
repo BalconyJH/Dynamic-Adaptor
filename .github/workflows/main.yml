@@ -13,6 +13,7 @@ jobs:
     steps:
     - name : Checkout
       uses : actions/checkout@v2
+
     - name : set_up_python3.8
       uses : actions/setup-python@v4
       with : 
@@ -29,6 +30,7 @@ jobs:
     - name : Build dist
       run : poetry build
       shell: bash 
+
     # - name: upload artifact
     #   uses: actions/upload-artifact@v3.1.1
     #   with:
@@ -42,18 +44,19 @@ jobs:
     #   with:
     #     name: build_result
 
-    - name : Check pwd
-      run: pwd
-      shell: bash
+    # - name : Check pwd
+    #   run: pwd
+    #   shell: bash
     
-    - name : Show files
-      run: ls -l
-      shell: bash
+    # - name : Show files
+    #   run: ls -l
+    #   shell: bash
       
     - name : Realease whl
-      uses : ncipollo/release-action@v1
+      uses : ncipollo/release-action@release/v1.12.0
       with :
         artifacts: "./dist/*.whl,./dist/*.tar.gz"
+        generateReleaseNotes: true
       
     - name : Publish to pypi
       if: startsWith(github.ref, 'refs/tags')
