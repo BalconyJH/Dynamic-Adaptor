@@ -53,7 +53,7 @@ jobs:
     #   shell: bash
       
     - name : Realease whl
-      uses : ncipollo/release-action@release/v1.12.0
+      uses : ncipollo/release-action@main/v1.12.0
       with :
         artifacts: "./dist/*.whl,./dist/*.tar.gz"
         generateReleaseNotes: true
