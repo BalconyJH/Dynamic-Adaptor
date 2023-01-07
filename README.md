@@ -30,7 +30,7 @@ import httpx
 async def sample1():
     dynamic_grpc = await get_dy_detail("746530608345251842")
     dynamic: dict = MessageToDict(dynamic_grpc[0])
-    dynamic_formate = formate_message("grpc", dynamic)
+    dynamic_formate =await formate_message("grpc", dynamic)
     print(dynamic_formate)
 
 
@@ -44,7 +44,7 @@ async def sample2():
         "Referer": "https://t.bilibili.com/746530608345251842"
     }
     result = httpx.get(url, headers=headers).json()
-    dynamic_formate = formate_message("web", result["data"]["item"])
+    dynamic_formate =await formate_message("web", result["data"]["item"])
     print(dynamic_formate)
 
 

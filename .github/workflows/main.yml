@@ -23,7 +23,7 @@ jobs:
       shell: bash
 
     - name : Install dependance
-      run: poetry install
+      run: poetry install --without dev
       shell: bash
 
     - name : Build dist
