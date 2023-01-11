@@ -195,6 +195,10 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
             try:
                 i["moduleDynamic"]["dynCommon"]["biz_type"] = i["moduleDynamic"]["dynCommon"]["bizType"]
                 i["moduleDynamic"]["dynCommon"]["url"] = i["moduleDynamic"]["dynCommon"]["uri"]
+                badge = {"text":i["moduleDynamic"]["dynCommon"]["badge"][0]["text"],
+                "color":i["moduleDynamic"]["dynCommon"]["badge"][0]["textColor"],
+                "bg_color":i["moduleDynamic"]["dynCommon"]["badge"][0]["bgColor"]}
+                i["moduleDynamic"]["dynCommon"]["badge"] = badge
                 return {"type": "MAJOR_TYPE_COMMON", "common": i["moduleDynamic"]["dynCommon"]}
             except KeyError:
                 pass
