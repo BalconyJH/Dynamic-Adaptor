@@ -58,7 +58,7 @@ asyncio.run(sample2())
 
 ## 数据结构
 
-```
+```bash
 message
 ├─message_type: str
 ├─message_id:str

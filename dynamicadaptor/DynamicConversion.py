@@ -360,10 +360,11 @@ async def web_formate(message: dict) -> RenderMessage:
             logger.exception("error")
         forward_additional = message["orig"]["modules"]["module_dynamic"]["additional"]
         forward_text = message["orig"]["modules"]["module_dynamic"]["desc"]
+        if message["orig"]["modules"]["module_dynamic"]["topic"] is not None:
+            forward_text["topic"] = message["orig"]["modules"]["module_dynamic"]["topic"]
         
-        forward_text["topic"] = message["orig"]["modules"]["module_dynamic"]["topic"]
-        # print(forward_text)
-        # print(forward_text["topic"])
+        
+        
         forward = Forward(header=forward_header, message_type=forward_type, major=forward_major,
                           additional=forward_additional, text=forward_text)
     except KeyError:
