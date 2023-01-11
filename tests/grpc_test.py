@@ -5,7 +5,7 @@ from dynamicadaptor.DynamicConversion import formate_message
 
 
 async def run():
-    message = await get_dy_detail("653313685928804369")
+    message = await get_dy_detail("746598069396570185")
     result = await formate_message(message_type="grpc", message=MessageToDict(message[0]))
     print(result)
 

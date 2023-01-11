@@ -171,42 +171,44 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
         try:
             if i["moduleDynamic"]["type"] == "mdl_dyn_forward":
                 continue
-        except KeyError:
+        except Exception as e:
             pass
         if i["moduleType"] == "module_dynamic":
             try:
                 return {"type": "MAJOR_TYPE_DRAW", "draw": i["moduleDynamic"]["dynDraw"]}
-            except KeyError:
+            except Exception as e:
                 pass
             try:
                 i["moduleDynamic"]["dynArchive"]["duration_text"] = i["moduleDynamic"]["dynArchive"]["coverLeftText1"]
                 return {"type": "MAJOR_TYPE_ARCHIVE", "archive": i["moduleDynamic"]["dynArchive"]}
-            except KeyError:
+            except Exception as e:
                 pass
             try:
                 return {"type": "MAJOR_TYPE_LIVE_RCMD", "live_rcmd": i["moduleDynamic"]["dynLiveRcmd"]}
-            except KeyError:
+            except Exception as e:
                 pass
             try:
                 i["moduleDynamic"]["dynArticle"]["cover"] = i["moduleDynamic"]["dynArticle"]["covers"]
                 return {"type": "MAJOR_TYPE_ARTICLE", "article": i["moduleDynamic"]["dynArticle"]}
-            except KeyError:
+            except Exception as e:
                 pass
             try:
+                # print(i["moduleDynamic"]["dynCommon"])
                 i["moduleDynamic"]["dynCommon"]["biz_type"] = i["moduleDynamic"]["dynCommon"]["bizType"]
                 i["moduleDynamic"]["dynCommon"]["url"] = i["moduleDynamic"]["dynCommon"]["uri"]
-                badge = {"text":i["moduleDynamic"]["dynCommon"]["badge"][0]["text"],
-                "color":i["moduleDynamic"]["dynCommon"]["badge"][0]["textColor"],
-                "bg_color":i["moduleDynamic"]["dynCommon"]["badge"][0]["bgColor"]}
-                i["moduleDynamic"]["dynCommon"]["badge"] = badge
+                if "badge" in i["moduleDynamic"]["dynCommon"]:
+                    badge = {"text":i["moduleDynamic"]["dynCommon"]["badge"][0]["text"],
+                    "color":i["moduleDynamic"]["dynCommon"]["badge"][0]["textColor"],
+                    "bg_color":i["moduleDynamic"]["dynCommon"]["badge"][0]["bgColor"]}
+                    i["moduleDynamic"]["dynCommon"]["badge"] = badge
                 return {"type": "MAJOR_TYPE_COMMON", "common": i["moduleDynamic"]["dynCommon"]}
-            except KeyError:
+            except Exception as e:
                 pass
             pass
             try:
                 i["moduleDynamic"]["dynMusic"]["label"] = i["moduleDynamic"]["dynMusic"]["label1"]
                 return {"type": "MAJOR_TYPE_MUSIC", "music": i["moduleDynamic"]["dynMusic"]}
-            except KeyError:
+            except Exception as e:
                 pass
             try:
                 i["moduleDynamic"]["dynPgc"]["badge"] = {
@@ -217,21 +219,21 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
                 i["moduleDynamic"]["dynPgc"]["stat"] = {"danmaku": i["moduleDynamic"]["dynPgc"]["coverLeftText3"],
                                                         "play": i["moduleDynamic"]["dynPgc"]["coverLeftText2"]}
                 return {"type": "MAJOR_TYPE_PGC", "pgc": i["moduleDynamic"]["dynPgc"]}
-            except KeyError:
+            except Exception as e:
                 pass
             try:
                 i["moduleDynamic"]["dynMedialist"]["sub_title"] = i["moduleDynamic"]["dynMedialist"]["subTitle"]
                 i["moduleDynamic"]["dynMedialist"]["badge"]["color"] = '#FFFFFF'
                 i["moduleDynamic"]["dynMedialist"]["badge"]["bg_color"] = '#FB7299'
                 return {"type": "MAJOR_TYPE_MEDIALIST", "medialist": i["moduleDynamic"]["dynMedialist"]}
-            except KeyError:
+            except Exception as e:
                 pass
             try:
                 i["moduleDynamic"]["dynCourSeason"]["sub_title"] = i["moduleDynamic"]["dynCourSeason"]["text1"]
                 i["moduleDynamic"]["dynCourSeason"]["badge"]["color"] = '#ffffff'
                 i["moduleDynamic"]["dynCourSeason"]["badge"]["bg_color"] = '#FB7199'
                 return {"type": "MAJOR_TYPE_COURSES", "courses": i["moduleDynamic"]["dynCourSeason"]}
-            except KeyError:
+            except Exception as e:
                 pass
             try:
                 i["moduleDynamic"]["dynCommonLive"]["desc_first"] = i["moduleDynamic"]["dynCommonLive"]["coverLabel"]
@@ -239,7 +241,7 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
                 i["moduleDynamic"]["dynCourSeason"]["badge"]["color"] = '#ffffff'
                 i["moduleDynamic"]["dynCourSeason"]["badge"]["bg_color"] = '#FB7199'
                 return {"type": "MAJOR_TYPE_LIVE", "live": i["moduleDynamic"]["dynCommonLive"]}
-            except KeyError:
+            except Exception as e:
                 pass
             return None
     return None
