@@ -193,7 +193,6 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
             except Exception as e:
                 pass
             try:
-                # print(i["moduleDynamic"]["dynCommon"])
                 i["moduleDynamic"]["dynCommon"]["biz_type"] = i["moduleDynamic"]["dynCommon"]["bizType"]
                 i["moduleDynamic"]["dynCommon"]["url"] = i["moduleDynamic"]["dynCommon"]["uri"]
                 if "badge" in i["moduleDynamic"]["dynCommon"]:
@@ -237,11 +236,13 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
                 pass
             try:
                 i["moduleDynamic"]["dynCommonLive"]["desc_first"] = i["moduleDynamic"]["dynCommonLive"]["coverLabel"]
-                i["moduleDynamic"]["dynCommonLive"]["desc_second"] = i["moduleDynamic"]["dynCommonLive"]["coverLabel2"]
-                i["moduleDynamic"]["dynCourSeason"]["badge"]["color"] = '#ffffff'
-                i["moduleDynamic"]["dynCourSeason"]["badge"]["bg_color"] = '#FB7199'
+                if "coverLabel2" in  i["moduleDynamic"]["dynCommonLive"]:
+                    i["moduleDynamic"]["dynCommonLive"]["desc_second"] = i["moduleDynamic"]["dynCommonLive"]["coverLabel2"]
+                i["moduleDynamic"]["dynCommonLive"]["badge"]["color"] = '#ffffff'
+                i["moduleDynamic"]["dynCommonLive"]["badge"]["bg_color"] = '#FB7199'
                 return {"type": "MAJOR_TYPE_LIVE", "live": i["moduleDynamic"]["dynCommonLive"]}
             except Exception as e:
+                logger.exception("error")
                 pass
             return None
     return None

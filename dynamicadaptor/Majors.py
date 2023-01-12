@@ -117,7 +117,7 @@ class Live(BaseModel):
     badge: Badge
     cover: str
     desc_first: str
-    desc_second: str
+    desc_second: Optional[str]
     title: str
 
 
