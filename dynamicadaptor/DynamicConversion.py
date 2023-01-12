@@ -298,7 +298,6 @@ async def get_grpc_additional(message: dict) -> Union[dict, None]:
                         "join_num": i["moduleAdditional"]["vote2"]["total"]
                     }
                     return {"type": "ADDITIONAL_TYPE_VOTE", "vote": vote}
-
             except Exception as e:
                 return None
     return None

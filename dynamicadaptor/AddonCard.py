@@ -50,14 +50,31 @@ class Ugc(BaseModel):
 class Vote(BaseModel):
     desc: str
     join_num: int
+    
 
+
+# 
+
+class UpowerLotteryBtnJst(BaseModel):
+    text:str
+class UpowerLotteryDesc(BaseModel):
+    text:str
+
+class UpowerLotteryBtn(BaseModel):
+    jump_style:UpowerLotteryBtnJst
+
+class UpowerLottery(BaseModel):
+    title:str
+    desc:UpowerLotteryDesc
+    button:UpowerLotteryBtn
 
 # class AdditionalDetail(Enum):
 #     """
-#     ADDITIONAL_TYPE_GOODS       640021213187407875 / 606639498929226246
-#     ADDITIONAL_TYPE_RESERVE     746531123737133065
-#     ADDITIONAL_TYPE_UGC         610622978014393724
-#     ADDITIONAL_TYPE_VOTE        611702685546788433
+#     ADDITIONAL_TYPE_UPOWER_LOTTERY    749962720991772680
+#     ADDITIONAL_TYPE_GOODS             640021213187407875 / 606639498929226246
+#     ADDITIONAL_TYPE_RESERVE           746531123737133065
+#     ADDITIONAL_TYPE_UGC               610622978014393724
+#     ADDITIONAL_TYPE_VOTE              611702685546788433
 #     ADDITIONAL_TYPE_COMMON
 #     |__game       638931657286484020
 #     |__decoration   638611334350503973
@@ -69,8 +86,8 @@ class Vote(BaseModel):
 #     reserve: Reserve
 #     common: Common
 #     ugc: Ugc
-#     vote: Vote
-
+#     vote: Vote    
+#     upower_lottery:UpowerLottery 
 
 class Additional(BaseModel):
     type: str
@@ -79,3 +96,4 @@ class Additional(BaseModel):
     common: Optional[Common]
     ugc: Optional[Ugc]
     vote: Optional[Vote]
+    upower_lottery:Optional[UpowerLottery]
