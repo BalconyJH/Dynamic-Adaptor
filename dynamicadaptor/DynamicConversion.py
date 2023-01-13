@@ -264,6 +264,8 @@ async def get_grpc_additional(message: dict) -> Union[dict, None]:
                     reserve = {"title": i["moduleAdditional"]["up"]["title"],
                                "desc1": i["moduleAdditional"]["up"]["descText1"],
                                "desc2": {"text": i["moduleAdditional"]["up"]["descText2"]}}
+                    if "descText3" in i["moduleAdditional"]["up"]:
+                        reserve["desc3"] = i["moduleAdditional"]["up"]["descText3"]
                     return {"type": "ADDITIONAL_TYPE_RESERVE", "reserve": reserve}
                 elif i["moduleAdditional"]["type"] == "additional_type_goods":
                     items = []
@@ -278,7 +280,7 @@ async def get_grpc_additional(message: dict) -> Union[dict, None]:
                 elif i["moduleAdditional"]["type"] == "additional_type_common":
                     try:
                         head_text = i["moduleAdditional"]["common"]["headText"]
-                    except KeyError:
+                    except Exception:
                         head_text = None
                     common = {
                         "head_text": head_text,
@@ -298,7 +300,7 @@ async def get_grpc_additional(message: dict) -> Union[dict, None]:
                         "join_num": i["moduleAdditional"]["vote2"]["total"]
                     }
                     return {"type": "ADDITIONAL_TYPE_VOTE", "vote": vote}
-            except Exception as e:
+            except Exception:
                 return None
     return None
 

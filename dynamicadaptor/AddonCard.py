@@ -25,6 +25,7 @@ class Reserve(BaseModel):
     title: str
     desc1: ReserveDesc
     desc2: ReserveDesc
+    desc3: Optional[ReserveDesc]
 
 
 # Common
