@@ -179,9 +179,18 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
             except Exception as e:
                 pass
             try:
+
                 i["moduleDynamic"]["dynArchive"]["duration_text"] = i["moduleDynamic"]["dynArchive"]["coverLeftText1"]
+                
+                badge = {
+                    "text":i["moduleDynamic"]["dynArchive"]["badge"][0]["text"],
+                    "color":i["moduleDynamic"]["dynArchive"]["badge"][0]["textColor"],
+                    "bg_color": i["moduleDynamic"]["dynArchive"]["badge"][0]["bgColor"] 
+                }
+                i["moduleDynamic"]["dynArchive"]["badge"] = badge
                 return {"type": "MAJOR_TYPE_ARCHIVE", "archive": i["moduleDynamic"]["dynArchive"]}
             except Exception as e:
+                # logger.exception("E")
                 pass
             try:
                 return {"type": "MAJOR_TYPE_LIVE_RCMD", "live_rcmd": i["moduleDynamic"]["dynLiveRcmd"]}
@@ -242,7 +251,6 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
                 i["moduleDynamic"]["dynCommonLive"]["badge"]["bg_color"] = '#FB7199'
                 return {"type": "MAJOR_TYPE_LIVE", "live": i["moduleDynamic"]["dynCommonLive"]}
             except Exception as e:
-                logger.exception("error")
                 pass
             return None
     return None
