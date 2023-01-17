@@ -62,7 +62,8 @@ class UpowerLotteryDesc(BaseModel):
     text:str
 
 class UpowerLotteryBtn(BaseModel):
-    jump_style:UpowerLotteryBtnJst
+    jump_style:Optional[UpowerLotteryBtnJst]
+    
 
 class UpowerLottery(BaseModel):
     title:str
