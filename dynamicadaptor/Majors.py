@@ -50,7 +50,7 @@ class LiveRcmd(BaseModel):
 
 # 专栏
 class Article(BaseModel):
-    cover: List[str]
+    covers: List[str]
     title: str
     desc: str
     label: str

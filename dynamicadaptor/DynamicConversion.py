@@ -175,85 +175,95 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
         except Exception as e:
             pass
         if i["moduleType"] == "module_dynamic":
-            try:
-                return {"type": "MAJOR_TYPE_DRAW", "draw": i["moduleDynamic"]["dynDraw"]}
-            except Exception as e:
-                pass
-            try:
+            module_dynamic_major_type = i["moduleDynamic"]["type"]
+            print(module_dynamic_major_type)
+            if module_dynamic_major_type == "mdl_dyn_draw":
+                try:
+                    return {"type": "MAJOR_TYPE_DRAW", "draw": i["moduleDynamic"]["dynDraw"]}
+                except Exception as e:
+                    logger.exception("error")
+            elif module_dynamic_major_type == "mdl_dyn_archive":
+                try:
+                    i["moduleDynamic"]["dynArchive"]["duration_text"] = i["moduleDynamic"]["dynArchive"]["coverLeftText1"]
+                    if "badge" in i["moduleDynamic"]["dynArchive"]:
+                        badge = {
+                            "text":i["moduleDynamic"]["dynArchive"]["badge"][0]["text"],
+                            "color":i["moduleDynamic"]["dynArchive"]["badge"][0]["textColor"],
+                            "bg_color": i["moduleDynamic"]["dynArchive"]["badge"][0]["bgColor"] 
+                        }
+                        i["moduleDynamic"]["dynArchive"]["badge"] = badge
+                    return {"type": "MAJOR_TYPE_ARCHIVE", "archive": i["moduleDynamic"]["dynArchive"]}
+                except Exception as e:
+                    logger.exception("error")
+            elif module_dynamic_major_type == "mdl_dyn_live_rcmd":       
+                try:
+                    return {"type": "MAJOR_TYPE_LIVE_RCMD", "live_rcmd": i["moduleDynamic"]["dynLiveRcmd"]}
+                except Exception as e:
+                    logger.exception("error")
+            elif module_dynamic_major_type == "mdl_dyn_article":
+                try:
+                    i["moduleDynamic"]["dynArticle"]["cover"] = i["moduleDynamic"]["dynArticle"]["covers"]
+                    return {"type": "MAJOR_TYPE_ARTICLE", "article": i["moduleDynamic"]["dynArticle"]}
+                except Exception as e:
+                    logger.exception("error")
+            elif module_dynamic_major_type == "mdl_dyn_common":
+                try:
+                    i["moduleDynamic"]["dynCommon"]["biz_type"] = i["moduleDynamic"]["dynCommon"]["bizType"]
+                    i["moduleDynamic"]["dynCommon"]["url"] = i["moduleDynamic"]["dynCommon"]["uri"]
+                    if "badge" in i["moduleDynamic"]["dynCommon"]:
+                        badge = {"text":i["moduleDynamic"]["dynCommon"]["badge"][0]["text"],
+                        "color":i["moduleDynamic"]["dynCommon"]["badge"][0]["textColor"],
+                        "bg_color":i["moduleDynamic"]["dynCommon"]["badge"][0]["bgColor"]}
+                        i["moduleDynamic"]["dynCommon"]["badge"] = badge
+                    return {"type": "MAJOR_TYPE_COMMON", "common": i["moduleDynamic"]["dynCommon"]}
+                except Exception as e:
+                    logger.exception("error")
+            elif module_dynamic_major_type == "mdl_dyn_music":
+                try:
+                    i["moduleDynamic"]["dynMusic"]["label"] = i["moduleDynamic"]["dynMusic"]["label1"]
+                    return {"type": "MAJOR_TYPE_MUSIC", "music": i["moduleDynamic"]["dynMusic"]}
+                except Exception as e:
+                    logger.exception("error")
+            elif module_dynamic_major_type == "mdl_dyn_pgc":
+                try:
+                    i["moduleDynamic"]["dynPgc"]["badge"] = {
+                        "text": i["moduleDynamic"]["dynPgc"]["badgeCategory"][1]["text"],
+                        "color": i["moduleDynamic"]["dynPgc"]["badgeCategory"][1]["textColor"],
+                        "bg_color": i["moduleDynamic"]["dynPgc"]["badgeCategory"][1]["bgColor"]}
 
-                i["moduleDynamic"]["dynArchive"]["duration_text"] = i["moduleDynamic"]["dynArchive"]["coverLeftText1"]
-                if "badge" in i["moduleDynamic"]["dynArchive"]:
-                    badge = {
-                        "text":i["moduleDynamic"]["dynArchive"]["badge"][0]["text"],
-                        "color":i["moduleDynamic"]["dynArchive"]["badge"][0]["textColor"],
-                        "bg_color": i["moduleDynamic"]["dynArchive"]["badge"][0]["bgColor"] 
-                    }
-                    i["moduleDynamic"]["dynArchive"]["badge"] = badge
-                return {"type": "MAJOR_TYPE_ARCHIVE", "archive": i["moduleDynamic"]["dynArchive"]}
-            except Exception as e:
-                logger.exception("E")
-                pass
-            try:
-                return {"type": "MAJOR_TYPE_LIVE_RCMD", "live_rcmd": i["moduleDynamic"]["dynLiveRcmd"]}
-            except Exception as e:
-                pass
-            try:
-                i["moduleDynamic"]["dynArticle"]["cover"] = i["moduleDynamic"]["dynArticle"]["covers"]
-                return {"type": "MAJOR_TYPE_ARTICLE", "article": i["moduleDynamic"]["dynArticle"]}
-            except Exception as e:
-                pass
-            try:
-                i["moduleDynamic"]["dynCommon"]["biz_type"] = i["moduleDynamic"]["dynCommon"]["bizType"]
-                i["moduleDynamic"]["dynCommon"]["url"] = i["moduleDynamic"]["dynCommon"]["uri"]
-                if "badge" in i["moduleDynamic"]["dynCommon"]:
-                    badge = {"text":i["moduleDynamic"]["dynCommon"]["badge"][0]["text"],
-                    "color":i["moduleDynamic"]["dynCommon"]["badge"][0]["textColor"],
-                    "bg_color":i["moduleDynamic"]["dynCommon"]["badge"][0]["bgColor"]}
-                    i["moduleDynamic"]["dynCommon"]["badge"] = badge
-                return {"type": "MAJOR_TYPE_COMMON", "common": i["moduleDynamic"]["dynCommon"]}
-            except Exception as e:
-                pass
-            pass
-            try:
-                i["moduleDynamic"]["dynMusic"]["label"] = i["moduleDynamic"]["dynMusic"]["label1"]
-                return {"type": "MAJOR_TYPE_MUSIC", "music": i["moduleDynamic"]["dynMusic"]}
-            except Exception as e:
-                pass
-            try:
-                i["moduleDynamic"]["dynPgc"]["badge"] = {
-                    "text": i["moduleDynamic"]["dynPgc"]["badgeCategory"][1]["text"],
-                    "color": i["moduleDynamic"]["dynPgc"]["badgeCategory"][1]["textColor"],
-                    "bg_color": i["moduleDynamic"]["dynPgc"]["badgeCategory"][1]["bgColor"]}
-
-                i["moduleDynamic"]["dynPgc"]["stat"] = {"danmaku": i["moduleDynamic"]["dynPgc"]["coverLeftText3"],
-                                                        "play": i["moduleDynamic"]["dynPgc"]["coverLeftText2"]}
-                return {"type": "MAJOR_TYPE_PGC", "pgc": i["moduleDynamic"]["dynPgc"]}
-            except Exception as e:
-                pass
-            try:
-                i["moduleDynamic"]["dynMedialist"]["sub_title"] = i["moduleDynamic"]["dynMedialist"]["subTitle"]
-                i["moduleDynamic"]["dynMedialist"]["badge"]["color"] = '#FFFFFF'
-                i["moduleDynamic"]["dynMedialist"]["badge"]["bg_color"] = '#FB7299'
-                return {"type": "MAJOR_TYPE_MEDIALIST", "medialist": i["moduleDynamic"]["dynMedialist"]}
-            except Exception as e:
-                pass
-            try:
-                i["moduleDynamic"]["dynCourSeason"]["sub_title"] = i["moduleDynamic"]["dynCourSeason"]["text1"]
-                i["moduleDynamic"]["dynCourSeason"]["badge"]["color"] = '#ffffff'
-                i["moduleDynamic"]["dynCourSeason"]["badge"]["bg_color"] = '#FB7199'
-                return {"type": "MAJOR_TYPE_COURSES", "courses": i["moduleDynamic"]["dynCourSeason"]}
-            except Exception as e:
-                pass
-            try:
-                i["moduleDynamic"]["dynCommonLive"]["desc_first"] = i["moduleDynamic"]["dynCommonLive"]["coverLabel"]
-                if "coverLabel2" in  i["moduleDynamic"]["dynCommonLive"]:
-                    i["moduleDynamic"]["dynCommonLive"]["desc_second"] = i["moduleDynamic"]["dynCommonLive"]["coverLabel2"]
-                i["moduleDynamic"]["dynCommonLive"]["badge"]["color"] = '#ffffff'
-                i["moduleDynamic"]["dynCommonLive"]["badge"]["bg_color"] = '#FB7199'
-                return {"type": "MAJOR_TYPE_LIVE", "live": i["moduleDynamic"]["dynCommonLive"]}
-            except Exception as e:
-                pass
-            return None
+                    i["moduleDynamic"]["dynPgc"]["stat"] = {"danmaku": i["moduleDynamic"]["dynPgc"]["coverLeftText3"],
+                                                            "play": i["moduleDynamic"]["dynPgc"]["coverLeftText2"]}
+                    return {"type": "MAJOR_TYPE_PGC", "pgc": i["moduleDynamic"]["dynPgc"]}
+                except Exception as e:
+                    logger.exception("error")
+            elif module_dynamic_major_type == "mdl_dyn_medialist":
+                try:
+                    i["moduleDynamic"]["dynMedialist"]["sub_title"] = i["moduleDynamic"]["dynMedialist"]["subTitle"]
+                    i["moduleDynamic"]["dynMedialist"]["badge"]["color"] = '#FFFFFF'
+                    i["moduleDynamic"]["dynMedialist"]["badge"]["bg_color"] = '#FB7299'
+                    return {"type": "MAJOR_TYPE_MEDIALIST", "medialist": i["moduleDynamic"]["dynMedialist"]}
+                except Exception as e:
+                    logger.exception("error")
+            elif module_dynamic_major_type == "mdl_dyn_cour_season":
+                try:
+                    i["moduleDynamic"]["dynCourSeason"]["sub_title"] = i["moduleDynamic"]["dynCourSeason"]["text1"]
+                    i["moduleDynamic"]["dynCourSeason"]["badge"]["color"] = '#ffffff'
+                    i["moduleDynamic"]["dynCourSeason"]["badge"]["bg_color"] = '#FB7199'
+                    return {"type": "MAJOR_TYPE_COURSES", "courses": i["moduleDynamic"]["dynCourSeason"]}
+                except Exception as e:
+                    logger.exception("error")
+            elif module_dynamic_major_type == "mdl_dyn_live":
+                try:
+                    i["moduleDynamic"]["dynCommonLive"]["desc_first"] = i["moduleDynamic"]["dynCommonLive"]["coverLabel"]
+                    if "coverLabel2" in  i["moduleDynamic"]["dynCommonLive"]:
+                        i["moduleDynamic"]["dynCommonLive"]["desc_second"] = i["moduleDynamic"]["dynCommonLive"]["coverLabel2"]
+                    i["moduleDynamic"]["dynCommonLive"]["badge"]["color"] = '#ffffff'
+                    i["moduleDynamic"]["dynCommonLive"]["badge"]["bg_color"] = '#FB7199'
+                    return {"type": "MAJOR_TYPE_LIVE", "live": i["moduleDynamic"]["dynCommonLive"]}
+                except Exception as e:
+                    logger.exception("error")
+            else:
+                return None
     return None
 
 
