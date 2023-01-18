@@ -145,12 +145,13 @@ async def get_grpc_text(message: dict) -> Union[dict, None]:
                     temp = {"type": rich_type_dict[j["type"]], "text": j["text"], "orig_text": j["origText"]}
                     try:
                         temp["emoji"] = {"icon_url": j["uri"], "type": j["emojiType"], "text": j["text"]}
-                    except KeyError as e:
+                    except Exception as e:
                         pass
                     rich_text_nodes.append(temp)
                 text["text"] = plain_text
                 text["rich_text_nodes"] = rich_text_nodes
-        except KeyError:
+        except Exception:
+            logger.exception("error")
             pass
     if text:
         return text
@@ -181,16 +182,16 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
             try:
 
                 i["moduleDynamic"]["dynArchive"]["duration_text"] = i["moduleDynamic"]["dynArchive"]["coverLeftText1"]
-                
-                badge = {
-                    "text":i["moduleDynamic"]["dynArchive"]["badge"][0]["text"],
-                    "color":i["moduleDynamic"]["dynArchive"]["badge"][0]["textColor"],
-                    "bg_color": i["moduleDynamic"]["dynArchive"]["badge"][0]["bgColor"] 
-                }
-                i["moduleDynamic"]["dynArchive"]["badge"] = badge
+                if "badge" in i["moduleDynamic"]["dynArchive"]:
+                    badge = {
+                        "text":i["moduleDynamic"]["dynArchive"]["badge"][0]["text"],
+                        "color":i["moduleDynamic"]["dynArchive"]["badge"][0]["textColor"],
+                        "bg_color": i["moduleDynamic"]["dynArchive"]["badge"][0]["bgColor"] 
+                    }
+                    i["moduleDynamic"]["dynArchive"]["badge"] = badge
                 return {"type": "MAJOR_TYPE_ARCHIVE", "archive": i["moduleDynamic"]["dynArchive"]}
             except Exception as e:
-                # logger.exception("E")
+                logger.exception("E")
                 pass
             try:
                 return {"type": "MAJOR_TYPE_LIVE_RCMD", "live_rcmd": i["moduleDynamic"]["dynLiveRcmd"]}
@@ -377,9 +378,11 @@ async def web_formate(message: dict) -> RenderMessage:
         forward_additional = message["orig"]["modules"]["module_dynamic"]["additional"]
         forward_text = message["orig"]["modules"]["module_dynamic"]["desc"]
         if message["orig"]["modules"]["module_dynamic"]["topic"] is not None:
-            forward_text["topic"] = message["orig"]["modules"]["module_dynamic"]["topic"]
-        
-        
+            if forward_text:
+                forward_text["topic"] = message["orig"]["modules"]["module_dynamic"]["topic"]
+            else:
+                forward_text = {"topic":message["orig"]["modules"]["module_dynamic"]["topic"]}
+                
         
         forward = Forward(header=forward_header, message_type=forward_type, major=forward_major,
                           additional=forward_additional, text=forward_text)

@@ -5,11 +5,12 @@ from dynamicadaptor.DynamicConversion import formate_message
 import json
 
 async def run():
-    message = await get_dy_detail("751145855632801799")
+    message = await get_dy_detail("752197925088526336")
     result = await formate_message(message_type="grpc", message=json.loads(MessageToJson(message[0])))
     # with open("a.json","w") as f:
-    #     f.write(json.dumps(MessageToDict(message[0])))
-    print(result)
+    #     f.write(MessageToJson(message[0]))
+    print(result.forward)
+
 
 
 if __name__ == "__main__":
