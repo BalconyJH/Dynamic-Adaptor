@@ -1,4 +1,6 @@
 .env
 .idea
+.git
+.github
 dist
 dynamicadaptor/__pycache__

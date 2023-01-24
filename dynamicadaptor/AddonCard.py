@@ -49,12 +49,10 @@ class Ugc(BaseModel):
 
 # Vote
 class Vote(BaseModel):
-    desc: str
-    join_num: int
+    desc: Optional[str]
+    join_num: Optional[int]
     
 
-
-# 
 
 class UpowerLotteryBtnJst(BaseModel):
     text:str
