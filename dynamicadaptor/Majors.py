@@ -50,7 +50,7 @@ class LiveRcmd(BaseModel):
 
 # 专栏
 class Article(BaseModel):
-    cover: List[str]
+    covers: List[str]
     title: str
     desc: str
     label: str
@@ -117,7 +117,7 @@ class Live(BaseModel):
     badge: Badge
     cover: str
     desc_first: str
-    desc_second: str
+    desc_second: Optional[str]
     title: str
 
 

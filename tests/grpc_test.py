@@ -1,13 +1,15 @@
 import asyncio
 from bilirpc.api import get_dy_detail
-from google.protobuf.json_format import MessageToDict
+from google.protobuf.json_format import MessageToJson,MessageToDict
 from dynamicadaptor.DynamicConversion import formate_message
-
+import json
 
 async def run():
-    message = await get_dy_detail("746954293972566036")
-    result = await formate_message(message_type="grpc", message=MessageToDict(message[0]))
-    print(result)
+    message = await get_dy_detail("633983562923638785")
+    result = await formate_message(message_type="grpc", message=json.loads(MessageToJson(message[0])))
+    # with open("a.json","w") as f:
+    #     f.write(MessageToJson(message[0]))
+    print(result.major)
 
 
 
