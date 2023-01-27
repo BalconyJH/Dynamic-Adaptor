@@ -120,6 +120,15 @@ class Live(BaseModel):
     desc_second: Optional[str]
     title: str
 
+class UgcSeason(BaseModel):
+    title:str
+    cover:str
+    duration_text:str
+    desc:Optional[str]
+    stat:Optional[Stat]
+    badge:Optional[Badge]
+
+
 
 # class MajorDetail(Enum):
 #     """
@@ -127,6 +136,7 @@ class Live(BaseModel):
 #     draw         图片            741262186696933397
 #     archive      视频            739851131027456201
 #     live_rcmd    直播
+#     ugc_season    合集           755703296984875092 
 #     article      专栏            720929682647679043
 #     common     装扮 活动等        551309621391003098/743181895357956118
 #     music       音乐             692040384055869478
@@ -149,3 +159,4 @@ class Major(BaseModel):
     medialist: Optional[MediaList]
     courses: Optional[Courses]
     live: Optional[Live]
+    ugc_season: Optional[UgcSeason]
