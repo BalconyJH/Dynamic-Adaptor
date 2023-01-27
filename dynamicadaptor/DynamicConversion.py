@@ -107,8 +107,15 @@ async def get_grpc_forward_header(message: dict) -> dict:
     """
     for i in message["modules"]:
         if i["moduleType"] == "module_author_forward":
-            author = i["moduleAuthorForward"]
-            return {"name": author["title"][0]["text"],"mid": author["uid"]}
+            try:
+                author = i["moduleAuthorForward"]
+                if "uid" in author:
+                    return {"name": author["title"][0]["text"],"mid": author["uid"]}
+                else:
+                    return {"name": author["title"][0]["text"],"mid": 0}
+            except Exception as e:
+                logger.exception(e)
+                
 
 
 async def get_grpc_text(message: dict) -> Union[dict, None]:
@@ -176,7 +183,7 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
             pass
         if i["moduleType"] == "module_dynamic":
             module_dynamic_major_type = i["moduleDynamic"]["type"]
-            print(module_dynamic_major_type)
+            # print(module_dynamic_major_type)
             if module_dynamic_major_type == "mdl_dyn_draw":
                 try:
                     return {"type": "MAJOR_TYPE_DRAW", "draw": i["moduleDynamic"]["dynDraw"]}
@@ -260,6 +267,16 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
                     i["moduleDynamic"]["dynCommonLive"]["badge"]["color"] = '#ffffff'
                     i["moduleDynamic"]["dynCommonLive"]["badge"]["bg_color"] = '#FB7199'
                     return {"type": "MAJOR_TYPE_LIVE", "live": i["moduleDynamic"]["dynCommonLive"]}
+                except Exception as e:
+                    logger.exception("error")
+            elif module_dynamic_major_type == "mdl_dyn_ugc_season":
+                try:
+                    dynUgcSeason = i["moduleDynamic"]["dynUgcSeason"]
+                    title = dynUgcSeason["title"]
+                    cover = dynUgcSeason["cover"]
+                    badge = {"text":"合集","color":"#FFFFFF", "bg_color":"#FB7299"}
+                    stat = {"danmaku":dynUgcSeason["coverLeftText3"],"play":dynUgcSeason["coverLeftText2"]}
+                    return {"type":"MAJOR_TYPE_UGC_SEASON","ugc_season":{"title":title,"cover":cover,"duration_text":dynUgcSeason["coverLeftText1"],"badge":badge,"stat":stat}}
                 except Exception as e:
                     logger.exception("error")
             else:
