@@ -176,102 +176,105 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
         Union[dict, None]: 符合要求的信息
     """
     for i in message["modules"]:
-        try:
-            if i["moduleDynamic"]["type"] == "mdl_dyn_forward":
-                continue
-        except Exception as e:
-            pass
+        # try:
+        #     if i["moduleDynamic"]["type"] == "mdl_dyn_forward":
+        #         print(i["moduleDynamic"])
+        #         continue
+        # except Exception as e:
+        #     pass
         if i["moduleType"] == "module_dynamic":
-            module_dynamic_major_type = i["moduleDynamic"]["type"]
-            # print(module_dynamic_major_type)
-            if module_dynamic_major_type == "mdl_dyn_draw":
+            # print(i["moduleDynamic"]["type"])
+            module_dynamic = i["moduleDynamic"]
+            if "dynDraw" in  module_dynamic:
                 try:
-                    return {"type": "MAJOR_TYPE_DRAW", "draw": i["moduleDynamic"]["dynDraw"]}
+                    return {"type": "MAJOR_TYPE_DRAW", "draw": module_dynamic["dynDraw"]}
                 except Exception as e:
                     logger.exception("error")
-            elif module_dynamic_major_type == "mdl_dyn_archive":
+            elif "dynForward" in module_dynamic:
+                continue
+            elif "dynArchive" in module_dynamic:
                 try:
-                    i["moduleDynamic"]["dynArchive"]["duration_text"] = i["moduleDynamic"]["dynArchive"]["coverLeftText1"]
-                    if "badge" in i["moduleDynamic"]["dynArchive"]:
+                    module_dynamic["dynArchive"]["duration_text"] = module_dynamic["dynArchive"]["coverLeftText1"]
+                    if "badge" in module_dynamic["dynArchive"]:
                         badge = {
-                            "text":i["moduleDynamic"]["dynArchive"]["badge"][0]["text"],
-                            "color":i["moduleDynamic"]["dynArchive"]["badge"][0]["textColor"],
-                            "bg_color": i["moduleDynamic"]["dynArchive"]["badge"][0]["bgColor"] 
+                            "text":module_dynamic["dynArchive"]["badge"][0]["text"],
+                            "color":module_dynamic["dynArchive"]["badge"][0]["textColor"],
+                            "bg_color": module_dynamic["dynArchive"]["badge"][0]["bgColor"] 
                         }
-                        i["moduleDynamic"]["dynArchive"]["badge"] = badge
-                    return {"type": "MAJOR_TYPE_ARCHIVE", "archive": i["moduleDynamic"]["dynArchive"]}
+                        module_dynamic["dynArchive"]["badge"] = badge
+                    return {"type": "MAJOR_TYPE_ARCHIVE", "archive": module_dynamic["dynArchive"]}
                 except Exception as e:
                     logger.exception("error")
-            elif module_dynamic_major_type == "mdl_dyn_live_rcmd":       
+            elif "dynLiveRcmd" in module_dynamic:      
                 try:
-                    return {"type": "MAJOR_TYPE_LIVE_RCMD", "live_rcmd": i["moduleDynamic"]["dynLiveRcmd"]}
+                    return {"type": "MAJOR_TYPE_LIVE_RCMD", "live_rcmd": module_dynamic["dynLiveRcmd"]}
                 except Exception as e:
                     logger.exception("error")
-            elif module_dynamic_major_type == "mdl_dyn_article":
+            elif "dynArticle" in module_dynamic:
                 try:
-                    i["moduleDynamic"]["dynArticle"]["cover"] = i["moduleDynamic"]["dynArticle"]["covers"]
-                    return {"type": "MAJOR_TYPE_ARTICLE", "article": i["moduleDynamic"]["dynArticle"]}
+                    module_dynamic["dynArticle"]["cover"] = module_dynamic["dynArticle"]["covers"]
+                    return {"type": "MAJOR_TYPE_ARTICLE", "article": module_dynamic["dynArticle"]}
                 except Exception as e:
                     logger.exception("error")
-            elif module_dynamic_major_type == "mdl_dyn_common":
+            elif "dynCommon" in module_dynamic:
                 try:
-                    i["moduleDynamic"]["dynCommon"]["biz_type"] = i["moduleDynamic"]["dynCommon"]["bizType"]
-                    i["moduleDynamic"]["dynCommon"]["url"] = i["moduleDynamic"]["dynCommon"]["uri"]
-                    if "badge" in i["moduleDynamic"]["dynCommon"]:
-                        badge = {"text":i["moduleDynamic"]["dynCommon"]["badge"][0]["text"],
-                        "color":i["moduleDynamic"]["dynCommon"]["badge"][0]["textColor"],
-                        "bg_color":i["moduleDynamic"]["dynCommon"]["badge"][0]["bgColor"]}
-                        i["moduleDynamic"]["dynCommon"]["badge"] = badge
-                    return {"type": "MAJOR_TYPE_COMMON", "common": i["moduleDynamic"]["dynCommon"]}
+                    module_dynamic["dynCommon"]["biz_type"] = module_dynamic["dynCommon"]["bizType"]
+                    module_dynamic["dynCommon"]["url"] = module_dynamic["dynCommon"]["uri"]
+                    if "badge" in module_dynamic["dynCommon"]:
+                        badge = {"text":module_dynamic["dynCommon"]["badge"][0]["text"],
+                        "color":module_dynamic["dynCommon"]["badge"][0]["textColor"],
+                        "bg_color":module_dynamic["dynCommon"]["badge"][0]["bgColor"]}
+                        module_dynamic["dynCommon"]["badge"] = badge
+                    return {"type": "MAJOR_TYPE_COMMON", "common": module_dynamic["dynCommon"]}
                 except Exception as e:
                     logger.exception("error")
-            elif module_dynamic_major_type == "mdl_dyn_music":
+            elif "dynMusic" in module_dynamic:
                 try:
-                    i["moduleDynamic"]["dynMusic"]["label"] = i["moduleDynamic"]["dynMusic"]["label1"]
-                    return {"type": "MAJOR_TYPE_MUSIC", "music": i["moduleDynamic"]["dynMusic"]}
+                    module_dynamic["dynMusic"]["label"] = module_dynamic["dynMusic"]["label1"]
+                    return {"type": "MAJOR_TYPE_MUSIC", "music": module_dynamic["dynMusic"]}
                 except Exception as e:
                     logger.exception("error")
-            elif module_dynamic_major_type == "mdl_dyn_pgc":
+            elif "dynPgc" in module_dynamic:
                 try:
-                    i["moduleDynamic"]["dynPgc"]["badge"] = {
-                        "text": i["moduleDynamic"]["dynPgc"]["badgeCategory"][1]["text"],
-                        "color": i["moduleDynamic"]["dynPgc"]["badgeCategory"][1]["textColor"],
-                        "bg_color": i["moduleDynamic"]["dynPgc"]["badgeCategory"][1]["bgColor"]}
+                    module_dynamic["dynPgc"]["badge"] = {
+                        "text": module_dynamic["dynPgc"]["badgeCategory"][1]["text"],
+                        "color": module_dynamic["dynPgc"]["badgeCategory"][1]["textColor"],
+                        "bg_color": module_dynamic["dynPgc"]["badgeCategory"][1]["bgColor"]}
 
-                    i["moduleDynamic"]["dynPgc"]["stat"] = {"danmaku": i["moduleDynamic"]["dynPgc"]["coverLeftText3"],
-                                                            "play": i["moduleDynamic"]["dynPgc"]["coverLeftText2"]}
-                    return {"type": "MAJOR_TYPE_PGC", "pgc": i["moduleDynamic"]["dynPgc"]}
+                    module_dynamic["dynPgc"]["stat"] = {"danmaku": module_dynamic["dynPgc"]["coverLeftText3"],
+                                                            "play": module_dynamic["dynPgc"]["coverLeftText2"]}
+                    return {"type": "MAJOR_TYPE_PGC", "pgc": module_dynamic["dynPgc"]}
                 except Exception as e:
                     logger.exception("error")
-            elif module_dynamic_major_type == "mdl_dyn_medialist":
+            elif "dynMedialist" in module_dynamic:
                 try:
-                    i["moduleDynamic"]["dynMedialist"]["sub_title"] = i["moduleDynamic"]["dynMedialist"]["subTitle"]
-                    i["moduleDynamic"]["dynMedialist"]["badge"]["color"] = '#FFFFFF'
-                    i["moduleDynamic"]["dynMedialist"]["badge"]["bg_color"] = '#FB7299'
-                    return {"type": "MAJOR_TYPE_MEDIALIST", "medialist": i["moduleDynamic"]["dynMedialist"]}
+                    module_dynamic["dynMedialist"]["sub_title"] = module_dynamic["dynMedialist"]["subTitle"]
+                    module_dynamic["dynMedialist"]["badge"]["color"] = '#FFFFFF'
+                    module_dynamic["dynMedialist"]["badge"]["bg_color"] = '#FB7299'
+                    return {"type": "MAJOR_TYPE_MEDIALIST", "medialist": module_dynamic["dynMedialist"]}
                 except Exception as e:
                     logger.exception("error")
-            elif module_dynamic_major_type == "mdl_dyn_cour_season":
+            elif "dynCourSeason" in module_dynamic:
                 try:
-                    i["moduleDynamic"]["dynCourSeason"]["sub_title"] = i["moduleDynamic"]["dynCourSeason"]["text1"]
-                    i["moduleDynamic"]["dynCourSeason"]["badge"]["color"] = '#ffffff'
-                    i["moduleDynamic"]["dynCourSeason"]["badge"]["bg_color"] = '#FB7199'
-                    return {"type": "MAJOR_TYPE_COURSES", "courses": i["moduleDynamic"]["dynCourSeason"]}
+                    module_dynamic["dynCourSeason"]["sub_title"] = module_dynamic["dynCourSeason"]["text1"]
+                    module_dynamic["dynCourSeason"]["badge"]["color"] = '#ffffff'
+                    module_dynamic["dynCourSeason"]["badge"]["bg_color"] = '#FB7199'
+                    return {"type": "MAJOR_TYPE_COURSES", "courses": module_dynamic["dynCourSeason"]}
                 except Exception as e:
                     logger.exception("error")
-            elif module_dynamic_major_type == "mdl_dyn_live":
+            elif "dynCommonLive" in module_dynamic:
                 try:
-                    i["moduleDynamic"]["dynCommonLive"]["desc_first"] = i["moduleDynamic"]["dynCommonLive"]["coverLabel"]
-                    if "coverLabel2" in  i["moduleDynamic"]["dynCommonLive"]:
-                        i["moduleDynamic"]["dynCommonLive"]["desc_second"] = i["moduleDynamic"]["dynCommonLive"]["coverLabel2"]
-                    i["moduleDynamic"]["dynCommonLive"]["badge"]["color"] = '#ffffff'
-                    i["moduleDynamic"]["dynCommonLive"]["badge"]["bg_color"] = '#FB7199'
-                    return {"type": "MAJOR_TYPE_LIVE", "live": i["moduleDynamic"]["dynCommonLive"]}
+                    module_dynamic["dynCommonLive"]["desc_first"] = module_dynamic["dynCommonLive"]["coverLabel"]
+                    if "coverLabel2" in  module_dynamic["dynCommonLive"]:
+                        module_dynamic["dynCommonLive"]["desc_second"] = module_dynamic["dynCommonLive"]["coverLabel2"]
+                    module_dynamic["dynCommonLive"]["badge"]["color"] = '#ffffff'
+                    module_dynamic["dynCommonLive"]["badge"]["bg_color"] = '#FB7199'
+                    return {"type": "MAJOR_TYPE_LIVE", "live": module_dynamic["dynCommonLive"]}
                 except Exception as e:
                     logger.exception("error")
-            elif module_dynamic_major_type == "mdl_dyn_ugc_season":
+            elif "dynUgcSeason" in module_dynamic:
                 try:
-                    dynUgcSeason = i["moduleDynamic"]["dynUgcSeason"]
+                    dynUgcSeason = module_dynamic["dynUgcSeason"]
                     title = dynUgcSeason["title"]
                     cover = dynUgcSeason["cover"]
                     badge = {"text":"合集","color":"#FFFFFF", "bg_color":"#FB7299"}

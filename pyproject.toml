@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "DynamicAdaptor"
-version = "0.3.5"
+version = "0.3.6"
 description = ""
 authors = ["DMC <lzxder@outlook.com>"]
 readme = "README.md"
