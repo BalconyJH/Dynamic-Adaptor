@@ -425,10 +425,10 @@ async def web_formate(message: dict) -> RenderMessage:
 
     try:
         text = message["modules"]["module_dynamic"]["desc"]
-        if text:
+        if text is not None:
             text["topic"] = message["modules"]["module_dynamic"]["topic"]
         else:
-            text = None
+            text = {"topic":message["modules"]["module_dynamic"]["topic"]}
     except KeyError:
         text = None
 
