@@ -7,7 +7,7 @@ import json
 async def run():
     message = await get_dy_detail("567663727278579035")
     result = await formate_message(message_type="grpc", message=json.loads(MessageToJson(message[0])))
-    
+    print(result)
 
 
 

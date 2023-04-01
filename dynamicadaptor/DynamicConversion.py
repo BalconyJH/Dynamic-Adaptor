@@ -178,10 +178,10 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
         Union[dict, None]: 符合要求的信息
     """
     for i in message["modules"]:
-
-        if i["moduleType"] in {"module_dynamic","module_item_null"}:
-            if i["moduleType"] == "module_item_null":
-                return {"type": "MAJOR_TYPE_NONE", "none": {"tips":i["moduleItemNull"]["text"]}}
+        if i["moduleType"] == "module_dynamic":
+        # if i["moduleType"] in {"module_dynamic","module_item_null"}:
+            # if i["moduleType"] == "module_item_null" :
+            #     return {"type": "MAJOR_TYPE_NONE", "none": {"tips":i["moduleItemNull"]["text"]}}
             module_dynamic = i["moduleDynamic"]
             if "dynDraw" in  module_dynamic:
                 try:
@@ -360,7 +360,7 @@ async def get_grpc_forward(message: dict) -> Union[Forward, None]:
         elif module_type == "module_item_null":
             forward_message_type = "DYNAMIC_TYPE_NONE"
             forward_header={"name": "","mid": 0}
-            forward_major = await get_grpc_major(message)
+            forward_major ={"type": "MAJOR_TYPE_NONE", "none": {"tips":i["moduleItemNull"]["text"]}}
             forward_text =None
             forward_additional=None
             forward = Forward(
