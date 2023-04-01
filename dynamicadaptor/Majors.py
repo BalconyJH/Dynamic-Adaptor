@@ -128,7 +128,8 @@ class UgcSeason(BaseModel):
     stat:Optional[Stat]
     badge:Optional[Badge]
 
-
+class MNone(BaseModel):
+    tips:str
 
 # class MajorDetail(Enum):
 #     """
@@ -160,3 +161,4 @@ class Major(BaseModel):
     courses: Optional[Courses]
     live: Optional[Live]
     ugc_season: Optional[UgcSeason]
+    none:Optional[MNone]

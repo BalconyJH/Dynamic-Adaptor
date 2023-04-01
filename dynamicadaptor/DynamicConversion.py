@@ -42,6 +42,7 @@ async def grpc_formate(message: dict) -> Union[RenderMessage, None]:
     text = await get_grpc_text(message)
     major = await get_grpc_major(message)
     additional = await get_grpc_additional(message)
+    # print(additional)
     forward = await get_grpc_forward(message)
     render_message = RenderMessage(
         message_type=message_type,
@@ -115,6 +116,7 @@ async def get_grpc_forward_header(message: dict) -> dict:
                     return {"name": author["title"][0]["text"],"mid": 0}
             except Exception as e:
                 logger.exception(e)
+    return None
                 
 
 
@@ -176,14 +178,10 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
         Union[dict, None]: 符合要求的信息
     """
     for i in message["modules"]:
-        # try:
-        #     if i["moduleDynamic"]["type"] == "mdl_dyn_forward":
-        #         print(i["moduleDynamic"])
-        #         continue
-        # except Exception as e:
-        #     pass
-        if i["moduleType"] == "module_dynamic":
-            # print(i["moduleDynamic"]["type"])
+
+        if i["moduleType"] in {"module_dynamic","module_item_null"}:
+            if i["moduleType"] == "module_item_null":
+                return {"type": "MAJOR_TYPE_NONE", "none": {"tips":i["moduleItemNull"]["text"]}}
             module_dynamic = i["moduleDynamic"]
             if "dynDraw" in  module_dynamic:
                 try:
@@ -355,13 +353,23 @@ async def get_grpc_forward(message: dict) -> Union[Forward, None]:
     """
     dynamic_forward = None
     for i in message["modules"]:
-        try:
-            module_type = i["moduleDynamic"]["type"]
-            if i["moduleType"] == "module_dynamic" and module_type == "mdl_dyn_forward":
-                dynamic_forward = i["moduleDynamic"]["dynForward"]["item"]
-                break
-        except Exception as e:
-            continue
+        module_type=i["moduleType"]
+        if module_type == "module_dynamic" and i["moduleDynamic"]["type"]=="mdl_dyn_forward":
+            dynamic_forward = i["moduleDynamic"]["dynForward"]["item"]
+            break
+        elif module_type == "module_item_null":
+            forward_message_type = "DYNAMIC_TYPE_NONE"
+            forward_header={"name": "","mid": 0}
+            forward_major = await get_grpc_major(message)
+            forward_text =None
+            forward_additional=None
+            forward = Forward(
+            message_type=forward_message_type,
+            header=forward_header,
+            text=forward_text,
+            major=forward_major,
+            additional=forward_additional)
+            return forward
     if dynamic_forward:
         forward_message_type = dynamic_forward["cardType"]
         forward_header = await get_grpc_forward_header(dynamic_forward)
@@ -376,6 +384,7 @@ async def get_grpc_forward(message: dict) -> Union[Forward, None]:
             additional=forward_additional
         )
         return forward
+
     else:
         return None
 

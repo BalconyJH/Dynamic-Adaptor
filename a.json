@@ -1,0 +1,164 @@
+{
+  "cardType": "forward",
+  "modules": [
+    {
+      "moduleType": "module_author",
+      "moduleAuthor": {
+        "mid": "1875094289",
+        "ptimeLabelText": "2021\u5e749\u67087\u65e5",
+        "author": {
+          "mid": "1875094289",
+          "name": "\u5c0f\u94c3\u4e45\u7ed8Official",
+          "face": "https://i2.hdslb.com/bfs/face/3244c8a64c276fdf9e5bd9f86e10e549ce64329e.jpg",
+          "official": {},
+          "vip": {
+            "Type": 2,
+            "status": 1,
+            "dueDate": "1682438400000",
+            "label": {
+              "text": "\u5e74\u5ea6\u5c0f\u4f1a\u5458",
+              "labelTheme": "fools_day_annual_vip"
+            },
+            "avatarSubscript": 2,
+            "nicknameColor": "#6DC781"
+          },
+          "live": {
+            "isLiving": 2,
+            "uri": "https://live.bilibili.com/22754458?accept_quality=%5B10000%5D&broadcast_type=0&current_qn=10000&current_quality=10000&is_room_feed=1&live_play_network=other&p2p_type=0&playurl_h264=http%3A%2F%2F117.169.96.237%2Flive-bvc%2F953235%2Flive_1875094289_17024390.flv%3Fexpires%3D1680348335%26pt%3Dandroid%26deadline%3D1680348335%26len%3D0%26oi%3D3747265391%26platform%3Dandroid%26qn%3D150%26trid%3D10001cda03c450c34b7eb8f0bb3135380774%26uipk%3D100%26uipv%3D100%26nbs%3D1%26uparams%3Dcdn%2Cdeadline%2Clen%2Coi%2Cplatform%2Cqn%2Ctrid%2Cuipk%2Cuipv%2Cnbs%26cdn%3Dcn-gotcha01%26upsig%3D3117eb81862ae69fe76f07835c4be379%26sk%3D18232a4fcc82e4c037c33d7e083619b4%26p2p_type%3D0%26sl%3D1%26mid%3D0%26sid%3Dcn-jxnc-cm-01-12%26chash%3D1%26bmt%3D1%26sche%3Dban%26score%3D13%26pp%3Drtmp%26machinezone%3Djd%26trace%3D8c1%26source%3Dbatch%26site%3D45ceea5c7c4c33328a1a9efcbfeff0ad%26order%3D1&playurl_h265=&quality_description=%5B%7B%22qn%22%3A10000%2C%22desc%22%3A%22%E5%8E%9F%E7%94%BB%22%7D%5D",
+            "liveState": "live_rotation"
+          },
+          "uri": "bilibili://space/1875094289?defaultTab=dynamic",
+          "pendant": {
+            "pid": "462",
+            "name": "\u5730\u4e2d\u6d77",
+            "image": "https://i2.hdslb.com/bfs/face/c8735da69314d54144a0b1fde5d69676ce72d7b6.png"
+          },
+          "nameplate": {}
+        },
+        "decorateCard": {
+          "id": "44861",
+          "cardUrl": "https://i0.hdslb.com/bfs/garb/item/0e7aab7f39b8e2dee55a971f58ea03d93189197e.png",
+          "jumpUrl": "https://www.bilibili.com/h5/mall/equity-link/home?navhide=1&item_id=44978&part=card&f_source=garb&from=post&isdiy=0",
+          "fan": {
+            "isFan": 1,
+            "number": 1,
+            "numberStr": "000001",
+            "color": "#eb91c7"
+          }
+        },
+        "tpList": [
+          {
+            "type": "background",
+            "default": {
+              "icon": "http://i0.hdslb.com/bfs/feed-admin/d965940ffa4202eead070e1bc6cdb6dff00ca864.png",
+              "title": "\u4f7f\u7528\u6b64\u5361\u7247\u80cc\u666f",
+              "uri": "https://www.bilibili.com/h5/mall/equity-link/home?navhide=1&item_id=44978&part=card&f_source=garb&from=post&isdiy=0"
+            }
+          },
+          {
+            "type": "share",
+            "share": {
+              "icon": "http://i0.hdslb.com/bfs/feed-admin/ee5902a63bbe4a0d78646d11036b062ea60573f6.png",
+              "title": "\u5206\u4eab"
+            }
+          },
+          {
+            "type": "attention",
+            "attention": {
+              "attentionIcon": "http://i0.hdslb.com/bfs/feed-admin/21db6bf12bc4ff9eeced847355114dfc6bae3a81.png",
+              "attentionText": "\u53d6\u6d88\u5173\u6ce8",
+              "notAttentionIcon": "http://i0.hdslb.com/bfs/feed-admin/27c54345860a1d2941a0ab32dc012fffb984e521.png",
+              "notAttentionText": "\u5173\u6ce8"
+            }
+          },
+          {
+            "type": "report",
+            "default": {
+              "icon": "http://i0.hdslb.com/bfs/feed-admin/d2a0449e705dcdeac1d2ac1e9da7e05d06b73dee.png",
+              "title": "\u4e3e\u62a5",
+              "uri": "bilibili://following/report?dynamicId=567663727278579035&uid=1875094289&title=%E5%B0%8F%E9%93%83%E4%B9%85%E7%BB%98Official%3A%E8%B0%A2%E8%B0%A2%E7%89%9B%E7%89%9B%E7%9A%84%E6%94%AF%E6%8C%81%E5%92%8C%E8%BF%94%E5%9B%BE%E5%95%A6%EF%BD%9E%E5%B0%8F%E6%9C%AC%E6%9C%AC%E5%8F%AF%E4%BB%A5%E7%94%A8%E8%B5%B7%E6%9D%A5%E5%93%92%EF%BC%81%E4%B8%8D%E8%A6%81%E8%88%8D%E4%B8%8D%E5%BE%97%E5%91%80%EF%BD%9E"
+            }
+          }
+        ],
+        "relation": {
+          "status": "relation_status_nofollow",
+          "title": "\u672a\u5173\u6ce8"
+        }
+      }
+    },
+    {
+      "moduleType": "module_desc",
+      "moduleDesc": {
+        "desc": [
+          {
+            "text": "\u8c22\u8c22\u725b\u725b\u7684\u652f\u6301\u548c\u8fd4\u56fe\u5566\uff5e\u5c0f\u672c\u672c\u53ef\u4ee5\u7528\u8d77\u6765\u54d2\uff01\u4e0d\u8981\u820d\u4e0d\u5f97\u5440\uff5e",
+            "type": "desc_type_text",
+            "origText": "\u8c22\u8c22\u725b\u725b\u7684\u652f\u6301\u548c\u8fd4\u56fe\u5566\uff5e\u5c0f\u672c\u672c\u53ef\u4ee5\u7528\u8d77\u6765\u54d2\uff01\u4e0d\u8981\u820d\u4e0d\u5f97\u5440\uff5e"
+          }
+        ],
+        "text": "\u8c22\u8c22\u725b\u725b\u7684\u652f\u6301\u548c\u8fd4\u56fe\u5566\uff5e\u5c0f\u672c\u672c\u53ef\u4ee5\u7528\u8d77\u6765\u54d2\uff01\u4e0d\u8981\u820d\u4e0d\u5f97\u5440\uff5e"
+      }
+    },
+    {
+      "moduleType": "module_item_null",
+      "moduleItemNull": {
+        "icon": "http://i0.hdslb.com/bfs/feed-admin/e08c12a37975eb3da72291167ac1519a16af61e7.png",
+        "text": "\u6e90\u52a8\u6001\u5df2\u88ab\u4f5c\u8005\u5220\u9664"
+      }
+    },
+    {
+      "moduleType": "module_stat",
+      "moduleStat": {
+        "like": "95",
+        "reply": "1",
+        "likeInfo": {
+          "animation": {}
+        },
+        "noForward": true,
+        "noForwardText": "\u6e90\u52a8\u6001\u4e0d\u89c1\u60f9\uff0c\u4e0d\u53ef\u4ee5\u8f6c\u53d1\u5662~"
+      }
+    }
+  ],
+  "extend": {
+    "dynIdStr": "567663727278579035",
+    "businessId": "567663727275118377",
+    "origName": "\u5c0f\u94c3\u4e45\u7ed8Official",
+    "desc": [
+      {
+        "text": "//",
+        "type": "desc_type_text"
+      },
+      {
+        "text": "@\u5c0f\u94c3\u4e45\u7ed8Official",
+        "type": "desc_type_aite",
+        "uri": "bilibili://space/1875094289?defaultTab=dynamic",
+        "rid": "1875094289"
+      },
+      {
+        "text": ":",
+        "type": "desc_type_text"
+      },
+      {
+        "text": "\u8c22\u8c22\u725b\u725b\u7684\u652f\u6301\u548c\u8fd4\u56fe\u5566\uff5e\u5c0f\u672c\u672c\u53ef\u4ee5\u7528\u8d77\u6765\u54d2\uff01\u4e0d\u8981\u820d\u4e0d\u5f97\u5440\uff5e",
+        "type": "desc_type_text",
+        "origText": "\u8c22\u8c22\u725b\u725b\u7684\u652f\u6301\u548c\u8fd4\u56fe\u5566\uff5e\u5c0f\u672c\u672c\u53ef\u4ee5\u7528\u8d77\u6765\u54d2\uff01\u4e0d\u8981\u820d\u4e0d\u5f97\u5440\uff5e"
+      }
+    ],
+    "origDynType": "forward",
+    "shareType": "3",
+    "shareScene": "dynamic",
+    "rType": 1,
+    "dynType": "1",
+    "uid": "1875094289",
+    "cardUrl": "bilibili://following/detail/567663727278579035?cardType=1&rid=567663727275118377",
+    "reply": {
+      "uri": "bilibili://following/detail/567663727278579035?cardType=1&rid=567663727275118377",
+      "params": [
+        {
+          "key": "comment_on",
+          "value": "1"
+        }
+      ]
+    }
+  }
+}
