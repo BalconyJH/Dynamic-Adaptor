@@ -17,7 +17,7 @@ httpx = "^0.23.3"
 
 
 [[tool.poetry.source]]
-name = "th"
+name = "ts"
 url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
 default = true
 secondary = false
