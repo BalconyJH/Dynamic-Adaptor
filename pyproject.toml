@@ -20,8 +20,8 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [[tool.poetry.source]]
-name = "douban"
+name = "ts"
 url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
-default = false
+default = true
 secondary = false
 

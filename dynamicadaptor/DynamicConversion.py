@@ -360,7 +360,8 @@ async def get_grpc_forward(message: dict) -> Union[Forward, None]:
     dynamic_forward = None
     for i in message["modules"]:
         module_type=i["moduleType"]
-        if module_type == "module_dynamic" and i["moduleDynamic"]["type"]=="mdl_dyn_forward":
+        # try:
+        if module_type == "module_dynamic" and "type" in i["moduleDynamic"] and i["moduleDynamic"]["type"]=="mdl_dyn_forward":
             dynamic_forward = i["moduleDynamic"]["dynForward"]["item"]
             break
         elif module_type == "module_item_null":
@@ -376,6 +377,8 @@ async def get_grpc_forward(message: dict) -> Union[Forward, None]:
             major=forward_major,
             additional=forward_additional)
             return forward
+        # except Exception as e:
+        #     print(i["moduleDynamic"])
     if dynamic_forward:
         forward_message_type = dynamic_forward["cardType"]
         forward_header = await get_grpc_forward_header(dynamic_forward)
