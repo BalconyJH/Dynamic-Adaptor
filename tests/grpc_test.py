@@ -5,9 +5,9 @@ from dynamicadaptor.DynamicConversion import formate_message
 import json
 
 async def run():
-    message = await get_dy_detail("567663727278579035")
+    message = await get_dy_detail("795989665061535777")
     result = await formate_message(message_type="grpc", message=json.loads(MessageToJson(message[0])))
-    print(result)
+    # print(result.text.rich_text_nodes)
 
 
 

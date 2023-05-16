@@ -40,6 +40,7 @@ async def grpc_formate(message: dict) -> Union[RenderMessage, None]:
     header = await get_grpc_header(message["modules"][0]["moduleAuthor"])
     
     text = await get_grpc_text(message)
+    # print(text)
     major = await get_grpc_major(message)
     additional = await get_grpc_additional(message)
     # print(additional)
@@ -153,7 +154,12 @@ async def get_grpc_text(message: dict) -> Union[dict, None]:
                 for j in i["moduleDesc"]["desc"]:
                     temp = {"type": rich_type_dict[j["type"]], "text": j["text"], "orig_text": j["origText"]}
                     try:
-                        temp["emoji"] = {"icon_url": j["uri"], "type": j["emojiType"], "text": j["text"]}
+                        # print(j)
+                        if "emojiType" in j:
+                            
+                            temp["emoji"] = {"icon_url": j["uri"], "type": j["emojiType"], "text": j["text"]}
+                        else:
+                            temp["emoji"] = {"icon_url": j["uri"], "type": j["type"], "text": j["text"]}
                     except Exception as e:
                         pass
                     rich_text_nodes.append(temp)
