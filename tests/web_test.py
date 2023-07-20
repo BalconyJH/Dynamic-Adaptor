@@ -3,16 +3,16 @@ import httpx
 import asyncio
 
 async def run():
-    # dyn_id = "75570329698487509"
-    url = "https://api.bilibili.com/x/polymer/web-dynamic/v1/detail?timezone_offset=-480&id=779490646924722209&features=itemOpusStyle"
+    dyn_id = "698569146564083856"
+    url = f"https://api.bilibili.com/x/polymer/web-dynamic/v1/detail?timezone_offset=-480&id={dyn_id}&features=itemOpusStyle"
     headers = {
-        "referer": "https://t.bilibili.com/779490646924722209",
-        "origin":"https://t.bilibili.com"
+        "referer": f"https://t.bilibili.com/{dyn_id}",
+        "origin":"https://t.bilibili.com",
+        "User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
     }
     res = httpx.get(url, headers=headers).json()
-    # print(res)
     result = await formate_message("web", res["data"]["item"])
-    print(result.forward.additional)
+    print(result.major.opus)
 
 if __name__ == "__main__":
 

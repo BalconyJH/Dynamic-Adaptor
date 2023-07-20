@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional,Union
 
 from pydantic import BaseModel, Json
 
@@ -7,7 +7,7 @@ from pydantic import BaseModel, Json
 class DrawItem(BaseModel):
     height: int
     width: int
-    src: str
+    url: str
 
 
 class Draw(BaseModel):
@@ -131,6 +131,24 @@ class UgcSeason(BaseModel):
 class MNone(BaseModel):
     tips:str
 
+class Emoji(BaseModel):
+    icon_url: Optional[str]
+    text: Optional[str]
+    type: Union[int, str, None]
+class RichTextNodes(BaseModel):
+    type:str
+    text:str
+    orig_text: Optional[str]
+    emoji: Optional[Emoji]
+
+class Summary(BaseModel):
+    text:str
+    rich_text_nodes:List[RichTextNodes]
+    
+class OPUS(BaseModel):
+    pics:Optional[List[DrawItem]]
+    summary:Summary
+    title:str
 # class MajorDetail(Enum):
 #     """
 #     类型          动态类型        示例动态
@@ -138,7 +156,7 @@ class MNone(BaseModel):
 #     archive      视频            739851131027456201
 #     live_rcmd    直播
 #     ugc_season    合集           755703296984875092 
-#     article      专栏            720929682647679043
+#     article      专栏            819930757423169558
 #     common     装扮 活动等        551309621391003098/743181895357956118
 #     music       音乐             692040384055869478
 #     pgc         电影/电视剧等     633983562923638785
@@ -161,4 +179,5 @@ class Major(BaseModel):
     courses: Optional[Courses]
     live: Optional[Live]
     ugc_season: Optional[UgcSeason]
+    opus:Optional[OPUS]
     none:Optional[MNone]
