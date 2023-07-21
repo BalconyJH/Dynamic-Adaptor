@@ -7,7 +7,8 @@ from pydantic import BaseModel, Json
 class DrawItem(BaseModel):
     height: int
     width: int
-    url: str
+    src: Optional[str]
+    url:Optional[str]
 
 
 class Draw(BaseModel):

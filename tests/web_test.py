@@ -3,7 +3,7 @@ import httpx
 import asyncio
 
 async def run():
-    dyn_id = "698569146564083856"
+    dyn_id = "820655786814341172"
     url = f"https://api.bilibili.com/x/polymer/web-dynamic/v1/detail?timezone_offset=-480&id={dyn_id}&features=itemOpusStyle"
     headers = {
         "referer": f"https://t.bilibili.com/{dyn_id}",
@@ -12,7 +12,7 @@ async def run():
     }
     res = httpx.get(url, headers=headers).json()
     result = await formate_message("web", res["data"]["item"])
-    print(result.major.opus)
+    print(result.major.draw.items[0].src)
 
 if __name__ == "__main__":
 
