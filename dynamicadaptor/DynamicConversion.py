@@ -37,7 +37,11 @@ async def grpc_formate(message: dict) -> Union[RenderMessage, None]:
     """
     message_type = message["cardType"]
     message_id = message["extend"]["dynIdStr"]
-    header = await get_grpc_header(message["modules"][0]["moduleAuthor"])
+    for i in message["modules"]:
+        if i["moduleType"] == "module_author":
+            header = await get_grpc_header(i["moduleAuthor"])
+            break
+    # header = await get_grpc_header(message["modules"][0]["moduleAuthor"])
     
     text = await get_grpc_text(message)
     # print(text)
