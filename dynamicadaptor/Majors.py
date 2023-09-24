@@ -149,7 +149,7 @@ class Summary(BaseModel):
 class OPUS(BaseModel):
     pics:Optional[List[DrawItem]]
     summary:Summary
-    title:str
+    title:Optional[str]
 # class MajorDetail(Enum):
 #     """
 #     类型          动态类型        示例动态

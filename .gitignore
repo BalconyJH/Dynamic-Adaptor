@@ -3,4 +3,5 @@
 .git
 .github
 dist
+sample
 dynamicadaptor/__pycache__
