@@ -145,10 +145,11 @@ class RichTextNodes(BaseModel):
 class Summary(BaseModel):
     text:str
     rich_text_nodes:List[RichTextNodes]
-    
+
+# opus
 class OPUS(BaseModel):
     pics:Optional[List[DrawItem]]
-    summary:Summary
+    summary:Optional[Summary]
     title:Optional[str]
 # class MajorDetail(Enum):
 #     """
@@ -166,7 +167,23 @@ class OPUS(BaseModel):
 #     live        转发直播          727260760787386403
 #     """
 
+#Blocked
 
+class BgImage(BaseModel):
+    img_dark:str
+    img_day:str
+
+class Button(BaseModel):
+    icon:Optional[str]
+    text:Optional[str]
+
+class Blocked(BaseModel):
+    hint_message:Optional[str]
+    blocked_type:int
+    bg_img:Optional[BgImage]
+    icon:Optional[BgImage]
+
+# main
 class Major(BaseModel):
     type: str
     draw: Optional[Draw]
@@ -182,3 +199,4 @@ class Major(BaseModel):
     ugc_season: Optional[UgcSeason]
     opus:Optional[OPUS]
     none:Optional[MNone]
+    blocked:Optional[Blocked]
