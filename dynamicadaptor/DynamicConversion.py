@@ -4,7 +4,10 @@ from .Message import RenderMessage
 from .Repost import Forward
 from loguru import logger
 
-async def formate_message(message_type: str, message: dict) -> Union[None, RenderMessage]:
+
+async def formate_message(
+    message_type: str, message: dict
+) -> Union[None, RenderMessage]:
     """将grpc动态或web端动态转换成渲染数据类型
 
     Args:
@@ -42,7 +45,7 @@ async def grpc_formate(message: dict) -> Union[RenderMessage, None]:
             header = await get_grpc_header(i["moduleAuthor"])
             break
     # header = await get_grpc_header(message["modules"][0]["moduleAuthor"])
-    
+
     text = await get_grpc_text(message)
     # print(text)
     major = await get_grpc_major(message)
@@ -116,13 +119,12 @@ async def get_grpc_forward_header(message: dict) -> dict:
             try:
                 author = i["moduleAuthorForward"]
                 if "uid" in author:
-                    return {"name": author["title"][0]["text"],"mid": author["uid"]}
+                    return {"name": author["title"][0]["text"], "mid": author["uid"]}
                 else:
-                    return {"name": author["title"][0]["text"],"mid": 0}
+                    return {"name": author["title"][0]["text"], "mid": 0}
             except Exception as e:
                 logger.exception(e)
     return None
-                
 
 
 async def get_grpc_text(message: dict) -> Union[dict, None]:
@@ -135,16 +137,17 @@ async def get_grpc_text(message: dict) -> Union[dict, None]:
 
     """
     text = {}
-    rich_type_dict = {"desc_type_text": "RICH_TEXT_NODE_TYPE_TEXT",
-                      "desc_type_aite": "RICH_TEXT_NODE_TYPE_AT",
-                      "desc_type_vote": "RICH_TEXT_NODE_TYPE_VOTE",
-                      "desc_type_topic": "RICH_TEXT_NODE_TYPE_TOPIC",
-                      "desc_type_bv": "RICH_TEXT_NODE_TYPE_BV",
-                      "desc_type_web": "RICH_TEXT_NODE_TYPE_WEB",
-                      "desc_type_lottery": "RICH_TEXT_NODE_TYPE_LOTTERY",
-                      "desc_type_goods": "RICH_TEXT_NODE_TYPE_GOODS",
-                      "desc_type_emoji": "RICH_TEXT_NODE_TYPE_EMOJI"
-                      }
+    rich_type_dict = {
+        "desc_type_text": "RICH_TEXT_NODE_TYPE_TEXT",
+        "desc_type_aite": "RICH_TEXT_NODE_TYPE_AT",
+        "desc_type_vote": "RICH_TEXT_NODE_TYPE_VOTE",
+        "desc_type_topic": "RICH_TEXT_NODE_TYPE_TOPIC",
+        "desc_type_bv": "RICH_TEXT_NODE_TYPE_BV",
+        "desc_type_web": "RICH_TEXT_NODE_TYPE_WEB",
+        "desc_type_lottery": "RICH_TEXT_NODE_TYPE_LOTTERY",
+        "desc_type_goods": "RICH_TEXT_NODE_TYPE_GOODS",
+        "desc_type_emoji": "RICH_TEXT_NODE_TYPE_EMOJI",
+    }
     for i in message["modules"]:
         try:
             if i["moduleType"] == "module_topic":
@@ -156,14 +159,25 @@ async def get_grpc_text(message: dict) -> Union[dict, None]:
                 plain_text = i["moduleDesc"]["text"]
                 rich_text_nodes = []
                 for j in i["moduleDesc"]["desc"]:
-                    temp = {"type": rich_type_dict[j["type"]], "text": j["text"], "orig_text": j["origText"]}
+                    temp = {
+                        "type": rich_type_dict[j["type"]],
+                        "text": j["text"],
+                        "orig_text": j["origText"],
+                    }
                     try:
                         # print(j)
                         if "emojiType" in j:
-                            
-                            temp["emoji"] = {"icon_url": j["uri"], "type": j["emojiType"], "text": j["text"]}
+                            temp["emoji"] = {
+                                "icon_url": j["uri"],
+                                "type": j["emojiType"],
+                                "text": j["text"],
+                            }
                         else:
-                            temp["emoji"] = {"icon_url": j["uri"], "type": j["type"], "text": j["text"]}
+                            temp["emoji"] = {
+                                "icon_url": j["uri"],
+                                "type": j["type"],
+                                "text": j["text"],
+                            }
                     except Exception as e:
                         pass
                     rich_text_nodes.append(temp)
@@ -189,95 +203,157 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
     """
     for i in message["modules"]:
         if i["moduleType"] == "module_dynamic":
-        # if i["moduleType"] in {"module_dynamic","module_item_null"}:
+            # if i["moduleType"] in {"module_dynamic","module_item_null"}:
             # if i["moduleType"] == "module_item_null" :
             #     return {"type": "MAJOR_TYPE_NONE", "none": {"tips":i["moduleItemNull"]["text"]}}
             module_dynamic = i["moduleDynamic"]
-            if "dynDraw" in  module_dynamic:
+            if "dynDraw" in module_dynamic:
                 try:
-                    return {"type": "MAJOR_TYPE_DRAW", "draw": module_dynamic["dynDraw"]}
+                    return {
+                        "type": "MAJOR_TYPE_DRAW",
+                        "draw": module_dynamic["dynDraw"],
+                    }
                 except Exception as e:
                     logger.exception("error")
             elif "dynForward" in module_dynamic:
                 continue
             elif "dynArchive" in module_dynamic:
                 try:
-                    module_dynamic["dynArchive"]["duration_text"] = module_dynamic["dynArchive"]["coverLeftText1"]
+                    module_dynamic["dynArchive"]["duration_text"] = module_dynamic[
+                        "dynArchive"
+                    ]["coverLeftText1"]
                     if "badge" in module_dynamic["dynArchive"]:
                         badge = {
-                            "text":module_dynamic["dynArchive"]["badge"][0]["text"],
-                            "color":module_dynamic["dynArchive"]["badge"][0]["textColor"],
-                            "bg_color": module_dynamic["dynArchive"]["badge"][0]["bgColor"] 
+                            "text": module_dynamic["dynArchive"]["badge"][0]["text"],
+                            "color": module_dynamic["dynArchive"]["badge"][0][
+                                "textColor"
+                            ],
+                            "bg_color": module_dynamic["dynArchive"]["badge"][0][
+                                "bgColor"
+                            ],
                         }
                         module_dynamic["dynArchive"]["badge"] = badge
-                    return {"type": "MAJOR_TYPE_ARCHIVE", "archive": module_dynamic["dynArchive"]}
+                    return {
+                        "type": "MAJOR_TYPE_ARCHIVE",
+                        "archive": module_dynamic["dynArchive"],
+                    }
                 except Exception as e:
                     logger.exception("error")
-            elif "dynLiveRcmd" in module_dynamic:      
+            elif "dynLiveRcmd" in module_dynamic:
                 try:
-                    return {"type": "MAJOR_TYPE_LIVE_RCMD", "live_rcmd": module_dynamic["dynLiveRcmd"]}
+                    return {
+                        "type": "MAJOR_TYPE_LIVE_RCMD",
+                        "live_rcmd": module_dynamic["dynLiveRcmd"],
+                    }
                 except Exception as e:
                     logger.exception("error")
             elif "dynArticle" in module_dynamic:
                 try:
-                    module_dynamic["dynArticle"]["cover"] = module_dynamic["dynArticle"]["covers"]
-                    return {"type": "MAJOR_TYPE_ARTICLE", "article": module_dynamic["dynArticle"]}
+                    module_dynamic["dynArticle"]["cover"] = module_dynamic[
+                        "dynArticle"
+                    ]["covers"]
+                    return {
+                        "type": "MAJOR_TYPE_ARTICLE",
+                        "article": module_dynamic["dynArticle"],
+                    }
                 except Exception as e:
                     logger.exception("error")
             elif "dynCommon" in module_dynamic:
                 try:
-                    module_dynamic["dynCommon"]["biz_type"] = module_dynamic["dynCommon"]["bizType"]
-                    module_dynamic["dynCommon"]["url"] = module_dynamic["dynCommon"]["uri"]
+                    module_dynamic["dynCommon"]["biz_type"] = module_dynamic[
+                        "dynCommon"
+                    ]["bizType"]
+                    module_dynamic["dynCommon"]["url"] = module_dynamic["dynCommon"][
+                        "uri"
+                    ]
                     if "badge" in module_dynamic["dynCommon"]:
-                        badge = {"text":module_dynamic["dynCommon"]["badge"][0]["text"],
-                        "color":module_dynamic["dynCommon"]["badge"][0]["textColor"],
-                        "bg_color":module_dynamic["dynCommon"]["badge"][0]["bgColor"]}
+                        badge = {
+                            "text": module_dynamic["dynCommon"]["badge"][0]["text"],
+                            "color": module_dynamic["dynCommon"]["badge"][0][
+                                "textColor"
+                            ],
+                            "bg_color": module_dynamic["dynCommon"]["badge"][0][
+                                "bgColor"
+                            ],
+                        }
                         module_dynamic["dynCommon"]["badge"] = badge
-                    return {"type": "MAJOR_TYPE_COMMON", "common": module_dynamic["dynCommon"]}
+                    return {
+                        "type": "MAJOR_TYPE_COMMON",
+                        "common": module_dynamic["dynCommon"],
+                    }
                 except Exception as e:
                     logger.exception("error")
             elif "dynMusic" in module_dynamic:
                 try:
-                    module_dynamic["dynMusic"]["label"] = module_dynamic["dynMusic"]["label1"]
-                    return {"type": "MAJOR_TYPE_MUSIC", "music": module_dynamic["dynMusic"]}
+                    module_dynamic["dynMusic"]["label"] = module_dynamic["dynMusic"][
+                        "label1"
+                    ]
+                    return {
+                        "type": "MAJOR_TYPE_MUSIC",
+                        "music": module_dynamic["dynMusic"],
+                    }
                 except Exception as e:
                     logger.exception("error")
             elif "dynPgc" in module_dynamic:
                 try:
                     module_dynamic["dynPgc"]["badge"] = {
                         "text": module_dynamic["dynPgc"]["badgeCategory"][1]["text"],
-                        "color": module_dynamic["dynPgc"]["badgeCategory"][1]["textColor"],
-                        "bg_color": module_dynamic["dynPgc"]["badgeCategory"][1]["bgColor"]}
+                        "color": module_dynamic["dynPgc"]["badgeCategory"][1][
+                            "textColor"
+                        ],
+                        "bg_color": module_dynamic["dynPgc"]["badgeCategory"][1][
+                            "bgColor"
+                        ],
+                    }
 
-                    module_dynamic["dynPgc"]["stat"] = {"danmaku": module_dynamic["dynPgc"]["coverLeftText3"],
-                                                            "play": module_dynamic["dynPgc"]["coverLeftText2"]}
+                    module_dynamic["dynPgc"]["stat"] = {
+                        "danmaku": module_dynamic["dynPgc"]["coverLeftText3"],
+                        "play": module_dynamic["dynPgc"]["coverLeftText2"],
+                    }
                     return {"type": "MAJOR_TYPE_PGC", "pgc": module_dynamic["dynPgc"]}
                 except Exception as e:
                     logger.exception("error")
             elif "dynMedialist" in module_dynamic:
                 try:
-                    module_dynamic["dynMedialist"]["sub_title"] = module_dynamic["dynMedialist"]["subTitle"]
-                    module_dynamic["dynMedialist"]["badge"]["color"] = '#FFFFFF'
-                    module_dynamic["dynMedialist"]["badge"]["bg_color"] = '#FB7299'
-                    return {"type": "MAJOR_TYPE_MEDIALIST", "medialist": module_dynamic["dynMedialist"]}
+                    module_dynamic["dynMedialist"]["sub_title"] = module_dynamic[
+                        "dynMedialist"
+                    ]["subTitle"]
+                    module_dynamic["dynMedialist"]["badge"]["color"] = "#FFFFFF"
+                    module_dynamic["dynMedialist"]["badge"]["bg_color"] = "#FB7299"
+                    return {
+                        "type": "MAJOR_TYPE_MEDIALIST",
+                        "medialist": module_dynamic["dynMedialist"],
+                    }
                 except Exception as e:
                     logger.exception("error")
             elif "dynCourSeason" in module_dynamic:
                 try:
-                    module_dynamic["dynCourSeason"]["sub_title"] = module_dynamic["dynCourSeason"]["text1"]
-                    module_dynamic["dynCourSeason"]["badge"]["color"] = '#ffffff'
-                    module_dynamic["dynCourSeason"]["badge"]["bg_color"] = '#FB7199'
-                    return {"type": "MAJOR_TYPE_COURSES", "courses": module_dynamic["dynCourSeason"]}
+                    module_dynamic["dynCourSeason"]["sub_title"] = module_dynamic[
+                        "dynCourSeason"
+                    ]["text1"]
+                    module_dynamic["dynCourSeason"]["badge"]["color"] = "#ffffff"
+                    module_dynamic["dynCourSeason"]["badge"]["bg_color"] = "#FB7199"
+                    return {
+                        "type": "MAJOR_TYPE_COURSES",
+                        "courses": module_dynamic["dynCourSeason"],
+                    }
                 except Exception as e:
                     logger.exception("error")
             elif "dynCommonLive" in module_dynamic:
                 try:
-                    module_dynamic["dynCommonLive"]["desc_first"] = module_dynamic["dynCommonLive"]["coverLabel"]
-                    if "coverLabel2" in  module_dynamic["dynCommonLive"]:
-                        module_dynamic["dynCommonLive"]["desc_second"] = module_dynamic["dynCommonLive"]["coverLabel2"]
-                    module_dynamic["dynCommonLive"]["badge"]["color"] = '#ffffff'
-                    module_dynamic["dynCommonLive"]["badge"]["bg_color"] = '#FB7199'
-                    return {"type": "MAJOR_TYPE_LIVE", "live": module_dynamic["dynCommonLive"]}
+                    module_dynamic["dynCommonLive"]["desc_first"] = module_dynamic[
+                        "dynCommonLive"
+                    ]["coverLabel"]
+                    if "coverLabel2" in module_dynamic["dynCommonLive"]:
+                        module_dynamic["dynCommonLive"]["desc_second"] = module_dynamic[
+                            "dynCommonLive"
+                        ]["coverLabel2"]
+                    module_dynamic["dynCommonLive"]["badge"]["color"] = "#ffffff"
+                    module_dynamic["dynCommonLive"]["badge"]["bg_color"] = "#FB7199"
+                    return {
+                        "type": "MAJOR_TYPE_LIVE",
+                        "live": module_dynamic["dynCommonLive"],
+                    }
                 except Exception as e:
                     logger.exception("error")
             elif "dynUgcSeason" in module_dynamic:
@@ -285,9 +361,21 @@ async def get_grpc_major(message: dict) -> Union[dict, None]:
                     dynUgcSeason = module_dynamic["dynUgcSeason"]
                     title = dynUgcSeason["title"]
                     cover = dynUgcSeason["cover"]
-                    badge = {"text":"合集","color":"#FFFFFF", "bg_color":"#FB7299"}
-                    stat = {"danmaku":dynUgcSeason["coverLeftText3"],"play":dynUgcSeason["coverLeftText2"]}
-                    return {"type":"MAJOR_TYPE_UGC_SEASON","ugc_season":{"title":title,"cover":cover,"duration_text":dynUgcSeason["coverLeftText1"],"badge":badge,"stat":stat}}
+                    badge = {"text": "合集", "color": "#FFFFFF", "bg_color": "#FB7299"}
+                    stat = {
+                        "danmaku": dynUgcSeason["coverLeftText3"],
+                        "play": dynUgcSeason["coverLeftText2"],
+                    }
+                    return {
+                        "type": "MAJOR_TYPE_UGC_SEASON",
+                        "ugc_season": {
+                            "title": title,
+                            "cover": cover,
+                            "duration_text": dynUgcSeason["coverLeftText1"],
+                            "badge": badge,
+                            "stat": stat,
+                        },
+                    }
                 except Exception as e:
                     logger.exception("error")
             else:
@@ -308,9 +396,11 @@ async def get_grpc_additional(message: dict) -> Union[dict, None]:
         if i["moduleType"] == "module_additional":
             try:
                 if i["moduleAdditional"]["type"] == "additional_type_up_reservation":
-                    reserve = {"title": i["moduleAdditional"]["up"]["title"],
-                               "desc1": i["moduleAdditional"]["up"]["descText1"],
-                               "desc2": {"text": i["moduleAdditional"]["up"]["descText2"]}}
+                    reserve = {
+                        "title": i["moduleAdditional"]["up"]["title"],
+                        "desc1": i["moduleAdditional"]["up"]["descText1"],
+                        "desc2": {"text": i["moduleAdditional"]["up"]["descText2"]},
+                    }
                     if "descText3" in i["moduleAdditional"]["up"]:
                         reserve["desc3"] = i["moduleAdditional"]["up"]["descText3"]
                     return {"type": "ADDITIONAL_TYPE_RESERVE", "reserve": reserve}
@@ -321,7 +411,7 @@ async def get_grpc_additional(message: dict) -> Union[dict, None]:
                         items.append(j)
                     goods = {
                         "head_text": i["moduleAdditional"]["goods"]["rcmdDesc"],
-                        "items": items
+                        "items": items,
                     }
                     return {"type": "ADDITIONAL_TYPE_GOODS", "goods": goods}
                 elif i["moduleAdditional"]["type"] == "additional_type_common":
@@ -335,16 +425,21 @@ async def get_grpc_additional(message: dict) -> Union[dict, None]:
                         "cover": i["moduleAdditional"]["common"]["imageUrl"],
                         "title": i["moduleAdditional"]["common"]["title"],
                         "desc1": i["moduleAdditional"]["common"]["descText1"],
-                        "desc2": i["moduleAdditional"]["common"]["descText2"]
+                        "desc2": i["moduleAdditional"]["common"]["descText2"],
                     }
                     return {"type": "ADDITIONAL_TYPE_COMMON", "common": common}
                 elif i["moduleAdditional"]["type"] == "additional_type_ugc":
-                    i["moduleAdditional"]["ugc"]["desc_second"] = i["moduleAdditional"]["ugc"]["descText2"]
-                    return {"type": "ADDITIONAL_TYPE_UGC", "ugc": i["moduleAdditional"]["ugc"]}
+                    i["moduleAdditional"]["ugc"]["desc_second"] = i["moduleAdditional"][
+                        "ugc"
+                    ]["descText2"]
+                    return {
+                        "type": "ADDITIONAL_TYPE_UGC",
+                        "ugc": i["moduleAdditional"]["ugc"],
+                    }
                 elif i["moduleAdditional"]["type"] == "additional_type_vote":
                     vote = {
                         "desc": i["moduleAdditional"]["vote2"]["title"],
-                        "join_num": i["moduleAdditional"]["vote2"]["total"]
+                        "join_num": i["moduleAdditional"]["vote2"]["total"],
                     }
                     return {"type": "ADDITIONAL_TYPE_VOTE", "vote": vote}
             except Exception:
@@ -363,23 +458,31 @@ async def get_grpc_forward(message: dict) -> Union[Forward, None]:
     """
     dynamic_forward = None
     for i in message["modules"]:
-        module_type=i["moduleType"]
+        module_type = i["moduleType"]
         # try:
-        if module_type == "module_dynamic" and "type" in i["moduleDynamic"] and i["moduleDynamic"]["type"]=="mdl_dyn_forward":
+        if (
+            module_type == "module_dynamic"
+            and "type" in i["moduleDynamic"]
+            and i["moduleDynamic"]["type"] == "mdl_dyn_forward"
+        ):
             dynamic_forward = i["moduleDynamic"]["dynForward"]["item"]
             break
         elif module_type == "module_item_null":
             forward_message_type = "DYNAMIC_TYPE_NONE"
-            forward_header={"name": "","mid": 0}
-            forward_major ={"type": "MAJOR_TYPE_NONE", "none": {"tips":i["moduleItemNull"]["text"]}}
-            forward_text =None
-            forward_additional=None
+            forward_header = {"name": "", "mid": 0}
+            forward_major = {
+                "type": "MAJOR_TYPE_NONE",
+                "none": {"tips": i["moduleItemNull"]["text"]},
+            }
+            forward_text = None
+            forward_additional = None
             forward = Forward(
-            message_type=forward_message_type,
-            header=forward_header,
-            text=forward_text,
-            major=forward_major,
-            additional=forward_additional)
+                message_type=forward_message_type,
+                header=forward_header,
+                text=forward_text,
+                major=forward_major,
+                additional=forward_additional,
+            )
             return forward
         # except Exception as e:
         #     print(i["moduleDynamic"])
@@ -394,7 +497,7 @@ async def get_grpc_forward(message: dict) -> Union[Forward, None]:
             header=forward_header,
             text=forward_text,
             major=forward_major,
-            additional=forward_additional
+            additional=forward_additional,
         )
         return forward
 
@@ -431,13 +534,21 @@ async def web_formate(message: dict) -> RenderMessage:
         forward_text = message["orig"]["modules"]["module_dynamic"]["desc"]
         if message["orig"]["modules"]["module_dynamic"]["topic"] is not None:
             if forward_text:
-                forward_text["topic"] = message["orig"]["modules"]["module_dynamic"]["topic"]
+                forward_text["topic"] = message["orig"]["modules"]["module_dynamic"][
+                    "topic"
+                ]
             else:
-                forward_text = {"topic":message["orig"]["modules"]["module_dynamic"]["topic"]}
-                
-        
-        forward = Forward(header=forward_header, message_type=forward_type, major=forward_major,
-                          additional=forward_additional, text=forward_text)
+                forward_text = {
+                    "topic": message["orig"]["modules"]["module_dynamic"]["topic"]
+                }
+
+        forward = Forward(
+            header=forward_header,
+            message_type=forward_type,
+            major=forward_major,
+            additional=forward_additional,
+            text=forward_text,
+        )
     except KeyError:
         forward = None
 
@@ -450,7 +561,7 @@ async def web_formate(message: dict) -> RenderMessage:
         if text is not None:
             text["topic"] = message["modules"]["module_dynamic"]["topic"]
         else:
-            text = {"topic":message["modules"]["module_dynamic"]["topic"]}
+            text = {"topic": message["modules"]["module_dynamic"]["topic"]}
     except KeyError:
         text = None
 
@@ -458,9 +569,8 @@ async def web_formate(message: dict) -> RenderMessage:
         text = None
 
     except Exception as e:
-        text=None
+        text = None
         logger.exception("error")
-
 
     render_message = RenderMessage(
         message_type=message["type"],
