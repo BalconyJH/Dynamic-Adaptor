@@ -54,6 +54,16 @@ class Article(BaseModel):
 
 
 class Common(BaseModel):
+    """
+    |_biz_type
+      |_0     活动       746596561856757763
+      |_3     装扮       551309621391003098
+      |_111   分享的游戏  746597347842064405
+      |_131   歌单       639296660796604438
+      |_141   频道       693101678851784753
+      |_231   挂件       746598069396570185
+      |_212   话题分享    746597704318058512
+    """
     biz_type: int
     badge: Optional[Badge] = None
     cover: Optional[str] = None
@@ -138,6 +148,21 @@ class OPUS(BaseModel):
     summary: Optional[Summary] = None
     title: Optional[str] = None
 
+# class MajorDetail(Enum):
+#     """
+#     类型          动态类型        示例动态
+#     draw         图片            741262186696933397
+#     archive      视频            739851131027456201
+#     live_rcmd    直播
+#     ugc_season    合集           755703296984875092 
+#     article      专栏            819930757423169558
+#     common     装扮 活动等        551309621391003098/743181895357956118
+#     music       音乐             819725994851041346
+#     pgc         电影/电视剧等     633983562923638785
+#     medialist   收藏列表          645144864359448578
+#     courses     课程             440646043801479846
+#     live        转发直播          727260760787386403
+#     """
 
 class BgImage(BaseModel):
     img_dark: str
