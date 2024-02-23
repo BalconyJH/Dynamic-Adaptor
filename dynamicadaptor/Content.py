@@ -3,19 +3,16 @@ from typing import Optional, List, Union
 
 
 class Emoji(BaseModel):
-    icon_url: Optional[str]
-    text: Optional[str]
-    type: Union[int, str, None]
-
-
-
+    icon_url: Optional[str] = None
+    text: Optional[str] = None
+    type: Union[int, str, None] = None
 
 
 class RichTextDetail(BaseModel):
     type: str
     text: str
-    orig_text: Optional[str]
-    emoji: Optional[Emoji]
+    orig_text: Optional[str] = None
+    emoji: Optional[Emoji] = None
     # RICH_TEXT_NODE_TYPE_TEXT      文本
     # RICH_TEXT_NODE_TYPE_AT        At
     # RICH_TEXT_NODE_TYPE_VOTE      投票
@@ -32,6 +29,6 @@ class Topic(BaseModel):
 
 
 class Text(BaseModel):
-    text: Optional[str]
-    topic: Optional[Topic]
-    rich_text_nodes: Optional[List[RichTextDetail]]
+    text: Optional[str] = None
+    topic: Optional[Topic] = None
+    rich_text_nodes: Optional[List[RichTextDetail]] = None

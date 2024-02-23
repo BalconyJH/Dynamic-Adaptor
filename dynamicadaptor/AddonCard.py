@@ -1,5 +1,4 @@
-from enum import Enum
-from typing import List, Optional, Union
+from typing import List, Optional
 from pydantic import BaseModel
 
 
@@ -9,7 +8,6 @@ class GoodsItem(BaseModel):
     price: str
     name: str
 
-    
 
 class Goods(BaseModel):
     head_text: str
@@ -25,16 +23,16 @@ class Reserve(BaseModel):
     title: str
     desc1: ReserveDesc
     desc2: ReserveDesc
-    desc3: Optional[ReserveDesc]
+    desc3: Optional[ReserveDesc] = None
 
 
 # Common
 class Common(BaseModel):
     sub_type: str
-    head_text: Optional[str]
+    head_text: Optional[str] = None
     cover: str
     desc1: str
-    desc2: Optional[str]
+    desc2: Optional[str] = None
     title: str
 
 
@@ -44,29 +42,32 @@ class Ugc(BaseModel):
     title: str
     desc_second: str
     duration: str
-    head_text: Optional[str]
+    head_text: Optional[str] = None
 
 
 # Vote
 class Vote(BaseModel):
-    desc: Optional[str]
-    join_num: Optional[int]
-    
+    desc: Optional[str] = None
+    join_num: Optional[int] = None
 
 
 class UpowerLotteryBtnJst(BaseModel):
-    text:str
+    text: str
+
+
 class UpowerLotteryDesc(BaseModel):
-    text:str
+    text: str
+
 
 class UpowerLotteryBtn(BaseModel):
-    jump_style:Optional[UpowerLotteryBtnJst]
-    
+    jump_style: Optional[UpowerLotteryBtnJst] = None
+
 
 class UpowerLottery(BaseModel):
-    title:str
-    desc:UpowerLotteryDesc
-    button:UpowerLotteryBtn
+    title: str
+    desc: UpowerLotteryDesc
+    button: UpowerLotteryBtn
+
 
 # class AdditionalDetail(Enum):
 #     """
@@ -86,14 +87,15 @@ class UpowerLottery(BaseModel):
 #     reserve: Reserve
 #     common: Common
 #     ugc: Ugc
-#     vote: Vote    
-#     upower_lottery:UpowerLottery 
+#     vote: Vote
+#     upower_lottery:UpowerLottery
+
 
 class Additional(BaseModel):
     type: str
-    goods: Optional[Goods]
-    reserve: Optional[Reserve]
-    common: Optional[Common]
-    ugc: Optional[Ugc]
-    vote: Optional[Vote]
-    upower_lottery:Optional[UpowerLottery]
+    goods: Optional[Goods] = None
+    reserve: Optional[Reserve] = None
+    common: Optional[Common] = None
+    ugc: Optional[Ugc] = None
+    vote: Optional[Vote] = None
+    upower_lottery: Optional[UpowerLottery] = None
