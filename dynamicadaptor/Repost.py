@@ -9,6 +9,6 @@ from .Majors import Major
 class Forward(BaseModel):
     message_type: str
     header: Head
-    text: Optional[Text]
-    major: Optional[Major]
-    additional: Optional[Additional]
+    text: Optional[Text] = None
+    major: Optional[Major] = None
+    additional: Optional[Additional] = None

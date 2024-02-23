@@ -1,44 +1,41 @@
-from typing import List, Optional,Union
-
+from typing import List, Optional, Union
 from pydantic import BaseModel, Json
 
 
-# 图片
 class DrawItem(BaseModel):
     height: int
     width: int
-    src: Optional[str]
-    url:Optional[str]
+    src: Optional[str] = None
+    url: Optional[str] = None
 
 
 class Draw(BaseModel):
     items: List[DrawItem]
 
 
-# 视频
 class Badge(BaseModel):
-    text: Optional[str]
-    color: Optional[str]
-    bg_color: Optional[str]
+    text: Optional[str] = None
+    color: Optional[str] = None
+    bg_color: Optional[str] = None
 
 
 class Archive(BaseModel):
     cover: str
     title: str
-    desc: Optional[str]
-    badge: Optional[Badge]
+    desc: Optional[str] = None
+    badge: Optional[Badge] = None
     duration_text: str
 
 
 # 直播
 class WatchShow(BaseModel):
-    text_large:str
+    text_large: str
 
 
 class LivePlayInfo(BaseModel):
     title: str
     cover: str
-    watched_show:WatchShow
+    watched_show: WatchShow
 
 
 class LiveRcmdContent(BaseModel):
@@ -49,7 +46,6 @@ class LiveRcmd(BaseModel):
     content: Json[LiveRcmdContent]
 
 
-# 专栏
 class Article(BaseModel):
     covers: List[str]
     title: str
@@ -57,7 +53,6 @@ class Article(BaseModel):
     label: str
 
 
-# common
 class Common(BaseModel):
     """
     |_biz_type
@@ -70,20 +65,18 @@ class Common(BaseModel):
       |_212   话题分享    746597704318058512
     """
     biz_type: int
-    badge: Optional[Badge]
-    cover: Optional[str]
-    desc: Optional[str]
-    title: Optional[str]
+    badge: Optional[Badge] = None
+    cover: Optional[str] = None
+    desc: Optional[str] = None
+    title: Optional[str] = None
 
 
-# 音乐
 class Music(BaseModel):
     cover: str
     label: str
     title: str
 
 
-# pgc
 class Stat(BaseModel):
     danmaku: str
     play: str
@@ -96,7 +89,6 @@ class Pgc(BaseModel):
     stat: Stat
 
 
-# MediaList
 class MediaList(BaseModel):
     badge: Badge
     cover: str
@@ -104,7 +96,6 @@ class MediaList(BaseModel):
     sub_title: str
 
 
-# COURSES
 class Courses(BaseModel):
     badge: Badge
     cover: str
@@ -113,44 +104,50 @@ class Courses(BaseModel):
     sub_title: str
 
 
-# Live
 class Live(BaseModel):
     badge: Badge
     cover: str
     desc_first: str
-    desc_second: Optional[str]
+    desc_second: Optional[str] = None
     title: str
 
+
 class UgcSeason(BaseModel):
-    title:str
-    cover:str
-    duration_text:str
-    desc:Optional[str]
-    stat:Optional[Stat]
-    badge:Optional[Badge]
+    title: str
+    cover: str
+    duration_text: str
+    desc: Optional[str] = None
+    stat: Optional[Stat] = None
+    badge: Optional[Badge] = None
+
 
 class MNone(BaseModel):
-    tips:str
+    tips: str
+
 
 class Emoji(BaseModel):
-    icon_url: Optional[str]
-    text: Optional[str]
-    type: Union[int, str, None]
+    icon_url: Optional[str] = None
+    text: Optional[str] = None
+    type: Union[int, str, None] = None
+
+
 class RichTextNodes(BaseModel):
-    type:str
-    text:str
-    orig_text: Optional[str]
-    emoji: Optional[Emoji]
+    type: str
+    text: str
+    orig_text: Optional[str] = None
+    emoji: Optional[Emoji] = None
+
 
 class Summary(BaseModel):
-    text:str
-    rich_text_nodes:List[RichTextNodes]
+    text: str
+    rich_text_nodes: List[RichTextNodes]
 
-# opus
+
 class OPUS(BaseModel):
-    pics:Optional[List[DrawItem]]
-    summary:Optional[Summary]
-    title:Optional[str]
+    pics: Optional[List[DrawItem]] = None
+    summary: Optional[Summary] = None
+    title: Optional[str] = None
+
 # class MajorDetail(Enum):
 #     """
 #     类型          动态类型        示例动态
@@ -167,36 +164,36 @@ class OPUS(BaseModel):
 #     live        转发直播          727260760787386403
 #     """
 
-#Blocked
-
 class BgImage(BaseModel):
-    img_dark:str
-    img_day:str
+    img_dark: str
+    img_day: str
+
 
 class Button(BaseModel):
-    icon:Optional[str]
-    text:Optional[str]
+    icon: Optional[str] = None
+    text: Optional[str] = None
+
 
 class Blocked(BaseModel):
-    hint_message:Optional[str]
-    blocked_type:int
-    bg_img:Optional[BgImage]
-    icon:Optional[BgImage]
+    hint_message: Optional[str] = None
+    blocked_type: int
+    bg_img: Optional[BgImage] = None
+    icon: Optional[BgImage] = None
 
-# main
+
 class Major(BaseModel):
     type: str
-    draw: Optional[Draw]
-    archive: Optional[Archive]
-    live_rcmd: Optional[LiveRcmd]
-    article: Optional[Article]
-    common: Optional[Common]
-    music: Optional[Music]
-    pgc: Optional[Pgc]
-    medialist: Optional[MediaList]
-    courses: Optional[Courses]
-    live: Optional[Live]
-    ugc_season: Optional[UgcSeason]
-    opus:Optional[OPUS]
-    none:Optional[MNone]
-    blocked:Optional[Blocked]
+    draw: Optional[Draw] = None
+    archive: Optional[Archive] = None
+    live_rcmd: Optional[LiveRcmd] = None
+    article: Optional[Article] = None
+    common: Optional[Common] = None
+    music: Optional[Music] = None
+    pgc: Optional[Pgc] = None
+    medialist: Optional[MediaList] = None
+    courses: Optional[Courses] = None
+    live: Optional[Live] = None
+    ugc_season: Optional[UgcSeason] = None
+    opus: Optional[OPUS] = None
+    none: Optional[MNone] = None
+    blocked: Optional[Blocked] = None
