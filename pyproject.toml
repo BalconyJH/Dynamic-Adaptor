@@ -14,7 +14,7 @@ loguru = "^0.6.0"
 [[tool.poetry.source]]
 name = "ts"
 url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
-default = true
+priority = "default"
 
 [build-system]
 requires = ["poetry-core"]
