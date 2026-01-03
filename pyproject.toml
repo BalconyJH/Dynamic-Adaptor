@@ -14,9 +14,13 @@ loguru = "^0.6.0"
 [[tool.poetry.source]]
 name = "ts"
 url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
-priority = "default"
+priority = "primary"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+[dependency-groups]
+dev = [
+    "httpx (>=0.28.1,<0.29.0)"
+]
